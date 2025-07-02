@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CryptoCefet</title>
+  <title>CriptoCefet</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -22,16 +22,19 @@
   <script src="../components/importHeader.js"></script>
 
   <main class="container">
-    <h2>Cifra de Hill</h2>
+    <h2 id="main-title">Cifra de Hill</h2>
     <p id="description">A Cifra de Hill foi criada por Lester S. Hill em 1929, com o objetivo de tornar a análise de
       padrões mais difícil
       de ser praticada. Ela utiliza matrizes para criptografar mensagens, tornando-as mais seguras. Veja mais sobre a história da Cifra de Hill <a href="">aqui</a>.
-      <br>
+      <br><br>
       A mensagem é convertida em números e dividida em blocos de tamanho igual à ordem da matriz chave. Cada bloco é então organizado em uma matriz (vetor coluna). Essa matriz de bloco é multiplicada pela matriz chave, resultando em uma matriz criptografada para aquele bloco.
       A matriz criptografada de cada bloco pode ser revertida para o bloco original ao ser multiplicada pela matriz inversa da chave.
+      <br><br>
+      Este guia tem dois passo a passos: um para criptografar e outro para descriptografar usando a Cifra de Hill.
     </p>
+    <br>
 
-    <div id="guide-container-1">
+    <div id="guide-container-1" class="blue-scope-line">
       <h3 id="guide-title-1">Como Cifrar <i class="fi fi-rs-lock"></i>​​</h3>
 
       <p class="step-name-1">1º passo: Escolher a chave</p>
@@ -100,11 +103,11 @@
       </div>
     </div>
 
-    <div id="guide-container-2">
+    <div id="guide-container-2" class="cyan-scope-line">
       <h3 id="guide-title-2">Passo a passo para Decifrar <i class="fi fi-rs-unlock"></i></h3>
       <p>
       <p class="step-name-2">1º passo: Inverter a matriz chave</p><br>
-      Para descriptografar, precisamos multiplicar a mensagem cifrada pela matriz chave inversa. <br><br>
+      Para descriptografar, precisamos multiplicar a mensagem cifrada pela matriz chave inversa.
       Para isso, vamos primeiro inverter a matriz chave:
       </p>
       <div class="interactive-content container rel">
@@ -113,7 +116,7 @@
 
       <p>
       <p class="step-name-2">2º passo: Decifrar a mensagem</p><br>
-      Agora, multiplicaremos a mensagem cifrada pela inversa da matriz chave. <br><br>
+      Agora, multiplicaremos a mensagem cifrada pela inversa da matriz chave.
       O resultado será a mensagem original.
       </p>
       <div class="interactive-content container rel">
