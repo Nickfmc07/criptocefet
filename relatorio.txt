@@ -1,0 +1,319 @@
+commit 9d3ab64563cc6596e235cb66cca321c7ad4f5fae
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Create .gitignore
+
+commit 0c1fd844055463b56a9a57cfa2cb2cc52e34343a
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Criado template para expor pdfs embutidos no site
+    
+    Usa a tag iframe
+
+commit c680c614f2dcc3875325e3ade17e7f78a6328aa7
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Página de Hill atualizada - Correção do processo criptográfico
+    
+    Agora a interface apresenta o processo criptográfico correto feito no código: as matrizes são divididas em colunas.
+
+commit f9b491584bbffcb1fd17b4ef5c78203ca6c9d1a7
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Cards atualizados, novos sinais matemáticos, novos subtítulos
+    
+    Sinais entre expressões de matrizes agora usam ícones padronizados
+    Subtítulos dentro de um contêiner com linha de escopo agora fazem a linha se ramificar
+    O efeito de passar o mouse sobre os cards foi melhorado
+
+commit 1ed4abdfc78ef39033a3294aa830d2abe0fc6577
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Botão de download e mudanças de organização
+
+commit e52aea7d5a27b24bac9cda964456e898c3d35462
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Novos ícones
+
+commit 615a46e569f78caa106dab9ff2d88a0d72259119
+Merge: e3d7674 d3c6578
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: GitHub <noreply@github.com>
+
+    Adicionando licensa
+    
+    Atualização com estrutura do pages e licensa criada
+
+commit d3c65780da45d19202815b86984c6e9c80207af7
+Merge: 3f6e2b9 e3d7674
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: GitHub <noreply@github.com>
+
+    Estilos unificados movidos pra /src e update em styles.css
+    
+    Dev
+
+commit e3d7674f9f605f1b273a7c476333232c95babced
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Arquivo movido
+    
+    O arquivo styles.css, no qual os estilos foram unificados, foi movido para /src e a pasta /styles foi excluída
+
+commit b23a1bc4de49fdeaf0ef98bc99b7ffecd79fa615
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Remoção de arquivos
+    
+    Arquivos de estilo que não são utilizados mais foram removidos:
+        - cesar.csss (continha estilos específicos para o primeiro protótipo que usava a cifra de césar)
+
+commit b13f4bf7f088b3299d3e8b8618e266d7ee1ac5f5
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Atualização de estilos de passo a passo
+    
+    Os títulos de cada passo pareciam com botões (recebi feedback), mas agora foram alterados para parecerem mais como subtítulos..
+
+commit 3f6e2b9be38cefaba9721a3d3b07be372688ad68
+Merge: e66f623 f70a59a
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: GitHub <noreply@github.com>
+
+    Merge pull request #4 from Nickfmc07/dev
+    
+    Dev
+
+commit f70a59a98cd927d00a1faa424add583411d30d8a
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Commit de organização
+    
+    Index foi passado para a root do src e o repositório foi atualizado com o repo do site.
+
+commit 939018f527e82de498f1b0b5b1370e8ff013c2a2
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Criada página inicial e página explorar cifras
+    
+    Conta com uma descrição e cards de conteúdos.
+    foram feitas mudanças de estilização nos títulos.
+
+commit e66f62332d35e5ee57c0ee4b5f9409ce3f597d23
+Merge: d8fc4dc 1a8bcb1
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: GitHub <noreply@github.com>
+
+    Merge pull request #3 from Nickfmc07/dev
+    
+    Novo layout + Pagina testar primos + Pagina cifra de césar
+
+commit 1a8bcb1f6406c18290bb613872023b17fcd25589
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Página da cifra de cesar criada
+
+commit 159efd227c6fb15da1964cce8036f2b18790bd13
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Dropdown deslisante e classes css auxiliares
+    
+    O tema do site agora é setado como claro por padrão;
+    
+    Conteiners dropdown deslisam ao aparecer/esconder;
+    
+    Dropdown agora usam classe auxiliar show para aparecer;
+    
+    Cridas classes auxiliares para: linhas laterais de escopo, cores, alinhamento de texto e próprio (justify-self);;
+    
+    criada estilização para checkboxes slide;
+    
+    agora o título principal do main tem um ID próprio para possibilitar descrições dropdown.
+
+commit 06b85007c18965f605216c7e9a8eab9bc047861c
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Criada página que testa primos
+
+commit d8fc4dc7ef57199c23e7b62e43ca77781431808f
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: GitHub <noreply@github.com>
+
+    Create LICENSE
+
+commit 6fe0830eeb54de2ebebbd9427b76550cd5f73c27
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    EM PROGRESSO: Atualização no conteúdo de testar primos e MathJax para LaTex
+    
+    Conteúdo em processo de escrita em testar-primos.html;
+    Melhorias na mecânica de dropdown;
+    Suporte a LaTex com MathJax.
+
+commit 8db3a1942360e13af674a37e927ec630fbd94e56
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Adicionados botoes e conteudos dropdown e icones flaticon
+
+commit e5a531318772e9dea6bbff00880a9b65b326da24
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Novo layout da página
+    
+    criado um arquivo importável com o conteúdo do cabeçalho
+    
+    novo modelo de layout
+
+commit de7576671f5595a3ae987cb1f1db52ec910eb3b7
+Merge: b0d252a 53b3917
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: GitHub <noreply@github.com>
+
+    Merge pull request #2 from Nickfmc07/dev
+    
+    Finalizado processo criptográfico na págona de Hill
+
+commit 53b3917fc33848ee3164f80655f40eb0a65e92a9
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Adicionada decifragem à Hill Cipher e aprimoradas estrutura e UX
+    
+    A página de Hill foi atualizada. O passo a passo criptográfico foi concluído adicionando o passo de decifrar e a estrutura aprimorada. Foram feitas melhorias no script para melhorar a experiência do usuário.
+    
+    Em hill.js:
+        Agora, o alphabetMap inicia com a -> 0 e termina com '.' -> 27;
+    
+        Criada função clearMatrtix e função clearAllMatrixes (limpa todas exceto a entrada da chave);
+    
+        As funções encrypt e decrypt agora são interfaces da função applyHillCipher;
+    
+        Agora, os blocos processados na função applyHillCipher são de dimensão 2x1;
+    
+        A conversão de texto em matriz foi adaptada para corresponder ao novo tamanho de bloco e
+        gera matrizes menores e de melhor legibilidade;
+    
+        Alterados os nomes das matrizes usando prefixos text ou numeric e infixos Encrypted, Decrypted,
+        Key, invKey ou nenhum.
+    
+        Agora o preenchimento do conteúdo interativo só é provocado se todos os campos requeridos
+        estiverem preenchidos devidamente e os campos dependentes são apagados caso os
+        correspondentes forem.
+    
+    Em hill.html foi alterado o conteúdo, separando-o em dois passo a passos, um para cifrar e outro para decifrar.
+
+commit 3b35b9a16af229c09c415d32fc1c67be7e00fb14
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    EM PROGRESSO: Adicionando processo decifrar em hill
+    
+    Criada a função numericToTextMatrix.
+    
+    Encrypt e decrypt agora são interfaces de applyHillCipher.
+    
+    Conteúdo didático sofreu alterações para ser mais pedagógico.
+
+commit b7d183420a2f7ef53e153391450c2d0a6aa5f8e0
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    EM PROGRESSO: Atulização da página de hill
+    
+    Adiconei a função getKeyMatrix e alterei as funções encrypt e textToLetterMatrix em hill.js;
+        Agora, matrizes são codificadas corretamente e a mensagem é adaptada na entrada.
+        É possível recuperar o valor da chave a partir do seu correspondente no html.
+    
+    Foram feitas mudanças no contéudo em hill.html:
+        Adicionados campos para codificar matrizes.
+        Alterada a sequência dos passos.
+
+commit 91bba48ef9f3ca87cebfb191a3fa2ebbade9eeaf
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Criei a pasta forDevelopers
+    
+    Inclui esboços e notas para o desenvolvedor. O objetivo é separá-las do projeto para maior organização.
+
+commit 7cf3e424dbe322e938949ac89be7d5a8b5dafb3a
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Atualização nos estilos para adaptar aos temas
+    
+    Atualizei os estilos de elementos como células para que sejam semitransparentes, adaptando-se melhor a ambos os temas claro e escuro sem que haja necessidade de script adicional em geral.css.
+
+commit 6d6b7e4047e22173c8025a24ae4e786fb799ae6f
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    EM PROGRESSO: Atualização da página hill
+    
+    Adicionei a entrada para a matriz chave em hill.html;
+    
+    Criei a função copmpleteKey(), que determina e preenche o quarto elemento para que a matriz seja apropriada para ser usada como chave na cifra de hill em hill.js;
+    
+    Atualizei os estilos para facilitar a visualização de matrizes em hill.css;
+
+commit b0d252aac306384d7db1f847d867a5bdcc66099a
+Merge: e7e3da6 9cbbc3c
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: GitHub <noreply@github.com>
+
+    Cesar, Home (adicionado) e Hill
+    
+    Alterando CSS, referências a arquivos e adicionando home.html
+
+commit 9cbbc3c36977865b9c9c86cd95285b4245dcd458
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+
+    Alterando CSS, referências a arquivos e adicionando home.html
+    
+    Atualizei os estilos para lidarem melhor com o tema claro.
+    Corrigi caminhos para scripts JS e arquivos CSS.
+    Renomeei arquivos de script JS e de CSS para garantir maior coerência.
+    Criei o arquivo home.html como página principal do site.
+
+commit e7e3da67e5363d58637d0014df57efffb6fe0137
+Author: Nícolas Chagas <nicolaschagas5588@gmail.com>
+Commit: Nícolas Chagas <nicolaschagas5588@gmail.com>
+
+    Commit de organização
+
+commit a1075a107205fc8ed38f80697c00a04e67faaeff
+Author: Nícolas Chagas <nicolaschagas5588@gmail.com>
+Commit: Nícolas Chagas <nicolaschagas5588@gmail.com>
+
+    Commit inicial
+
+commit fc7c70ee592761ea233f7145535240668ddb630e
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: GitHub <noreply@github.com>
+
+    Add files via upload
+
+commit f1e719e3d924d8dddb20f48c5ba50a1b07cd78d3
+Author: Nícolas Francisco Martins Chagas <125323611+Nickfmc07@users.noreply.github.com>
+Commit: GitHub <noreply@github.com>
+
+    Initial commit
