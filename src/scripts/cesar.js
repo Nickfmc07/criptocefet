@@ -1,7 +1,6 @@
 const chaveEl = document.getElementById('chave')
 const alfabetoEl = document.getElementById('alfabeto')
 const alfabetoCifradoEl = document.getElementById('alfabeto-cifrado')
-const inputs = document.querySelectorAll('input')
 const modoEl = document.getElementById('modo')
 const mensagemEl = document.getElementById('mensagem')
 const textoCifradoEl = document.getElementById('texto-cifrado')
@@ -21,34 +20,28 @@ function preencherConjuntoLetras(elementoEl, primeiraLetra) {
   }
 }
 
-function encrypt(key, textoOriginal) {
-  if (key == 0 || isNaN(key)) return textoOriginal
+function aplicarCifraCesar(chave, texto) {
+  if (chave == 0 || isNaN(chave)) return texto
+  chave = chave % 26
   let textoCifrado = ""
-  for (let i = 0; i < textoOriginal.length; i++) {
-    let c = textoOriginal[i]
-    if (c >= 'a' && c <= 'z') {
-      c = String.fromCharCode((c.charCodeAt(0) - 97 + key) % 26 + 97)
-    } else if (c >= 'A' && c <= 'Z') {
-      c = String.fromCharCode((c.charCodeAt(0) - 65 + key) % 26 + 65)
-    }
+  for (i = 0; i < texto.length; i++) {
+    let c = texto[i]
+    if (c >= 'a' && c <= 'z') 
+      c = String.fromCharCode((c.charCodeAt(0) - 97 + chave) % 26 + 97)
+    else if (c >= 'A' && c <= 'Z')
+      c = String.fromCharCode((c.charCodeAt(0) - 65 + chave) % 26 + 65)
     textoCifrado += c
   }
   return textoCifrado
 }
 
-function decryptC(key, textoCifrado) {
-  if (key == 0 || isNaN(key)) return textoCifrado
-  let textoDecodificado = ""
-  for (let i = 0; i < textoCifrado.length; i++) {
-    let c = textoCifrado[i]
-    if (c >= 'a' && c <= 'z') {
-      c = String.fromCharCode((c.charCodeAt(0) - 97 - key + 26) % 26 + 97)
-    } else if (c >= 'A' && c <= 'Z') {
-      c = String.fromCharCode((c.charCodeAt(0) - 65 - key + 26) % 26 + 65)
-    }
-    textoDecodificado += c
-  }
-  return textoDecodificado
+function encrypt(chave, textoOriginal) {
+  return aplicarCifraCesar(chave, textoOriginal)
+}
+
+function decryptC(chave, textoCifrado) {
+  chave = chave * -1
+  return aplicarCifraCesar()
 }
 
 function trocarModo() {
@@ -89,10 +82,17 @@ modoEl.addEventListener('change', () => {
   trocarModo()
 })
 
-inputs.forEach(input => {
-  input.addEventListener('input', () => {
+
+mensagemEl.addEventListener('input', () => {
     atualizarConteudoInterativo()
-  });
+});
+
+textoCifradoEl.addEventListener('input', () => {
+    atualizarConteudoInterativo()
+});
+
+chaveEl.addEventListener('input', () => {
+    atualizarConteudoInterativo()
 });
 
 preencherConjuntoLetras(alfabetoEl, "A")
