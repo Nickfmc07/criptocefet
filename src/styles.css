@@ -660,6 +660,13 @@ strong {
     }
 }
 
+#tabula th{
+    border: 1px solid black;
+    padding: 4px;
+    text-align: center;
+    background-color: var(--cinza-claro);
+}
+
 /* Estilos adaptados para impressão */
 @media print {
     header {
