@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CriptoCefet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <header></header>
+    <script src="../components/importHeader.js"></script>
+
+    <main class="container">
+        <h2 title="Clique para mostrar ou esconder a descrição" id="main-title" class="dropdown-btn">Cifra de Vigenère
+            <i class="fi fi-rs-angle-small-right icon-square flipped"></i>
+        </h2>
+        <div id="description" class="dropdown-content show">
+            <p>
+                A Cifra de Vigenère foi inventada por Giovan Battista Bellaso e nomeada em homenagem a Blaise de
+                Vigenère.
+                Para saber mais sobre a historia dessa cifra,
+                clique <a href="historia-vigenere.html">aqui</a>.
+
+                O método de criptografia consiste em definir uma chave, pode ter qualquer tamanho, e usando a
+                <a href="tabula.html">tabula recta</a>
+                deslocar cada letra da mensagem original por um número n definido pela chave.
+                <br><br>
+                Para que o método funcione, é necessário que o comportamento dele seja como o de uma função sobrejetora,
+                ou
+                seja, cada letra na mensagem original deve corresponder a pelo menos uma letra na mensagem cifrada.
+                Pra garantir isso, o comportamento do deslocamento de cada letra ser cíclico, como um relógio, onde após
+                a
+                letra "Z"
+                voltamos para a letra "A". Por exemplo, se deslocarmos a letra "Z" 1 casa para a direita, obteremos "A":
+            <div class="rel">
+                <input class="cell" type="text" disabled value="Z">
+                <div class="icon-square"><i class="fi fi-rs-arrow-right"></i></div>
+                <input class="cell" type="text" disabled value="A">
+            </div>
+            </p>
+            <br>
+            <p>
+                Para garantir que a cifra se comporte como um relógio, sempre que operarmos com números maiores que 25,
+                devemos aplicar o módulo 26. Assim, 26 mod 26 é 0, 27 mod 26 é 1, e assim por diante. Por exemplo:
+            </p>
+            <br>
+            <br>
+            <p class="align-center">\( 27 \bmod 26 = 1 \)</p>
+            Ou seja, 27 casas para a direita é o mesmo que 1 casa para a direita. Então 27 representa a letra "B", assim
+            como 1. Portanto, podemos dizer que o deslocamento é cíclico e se comporta como uma função sobrejetora.
+
+        </div>
+
+        <p>Este guia mostra como cifrar e decodificar usando a Cifra de Vigenère. Veja a tabela abaixo:</p>
+        <br>
+        <div min-height="30vw" id="tabula">
+        </div>
+        <br>
+        <p class="step-name-1">Escolha a chave</p>
+        <br>
+        <p>Para usar a cifra, vamos primeiro escolher qual chave vamos usar. A chave deve ser conter apenas letras. Ele
+            pode ter qualquer tamanho.</p>
+        <div class="interactive-content">
+            <i class="fi fi-rs-digital-key"></i><input id="chave" type="text" placeholder="Digite a chave">
+        </div>
+        <br>
+        <p class="step-name-1">Cifrar e Decifrar</p>
+        <br>
+        <p>Agora, o que vamos fazer é deslocar cada letra da mensagem original pelo número de casas definido pela chave.
+            Se a primeira letra da chave for "B", que é a segunda letra do alfabeto, vamos deslocar a primeira letra da
+            mensagem original 1 casa para a direita. Dizendo que a letra era "F", ao deslocá-la 1 casa para a direita,
+            obtemos "G".
+        <div class="rel">
+            <input class="cell" type="text" disabled value="F">
+            <div class="icon-square"><i class="fi fi-rs-arrow-right"></i></div>
+            <input class="cell" type="text" disabled value="G">
+        </div>
+
+        Usando a tabula recta, isso fica mais fácil. Usa a letra original como coluna e a letra da chave como linha. O
+        ponto de encontro é a letra cifrada.
+        <br><br>
+        Para cada letra da mensagem original, usamos a próxima letra da chave. Se a chave for menor que a mensagem,
+        voltamos
+        ao
+        início da chave.
+        </p>
+        <div class="interactive-content">
+            <div class="switch-container justify-center">
+                <span>Cifrar</span>
+                <label class="switch">
+                    <input type="checkbox" id="modo">
+                    <span class="slider"></span>
+                </label>
+                <span>Decifrar</span>
+            </div>
+            <div class="comp">
+                <label for="mensagem"><i class="azul fi fi-rs-unlock"></i> Mensagem: <input type="text" id="mensagem"
+                        placeholder="Digite sua mensagem"></label>
+
+
+                <label for="texto-cifrado"><i class="ciano fi fi-rs-lock"></i> Texto cifrado: <input disabled
+                        type="text" id="texto-cifrado"></label>
+            </div>
+        </div>
+
+        <br><br><br><br><br>
+        <p>Conteúdos relacionados:</p>
+        <ul>
+            <li>Função Sobrejetora</li>
+            <li>Aritmética Modular</li>
+        </ul>
+    </main>
+    <script src="../scripts/geral.js"></script>
+    <script src="../scripts/vigenere.js"></script>
+</body>
+
+</html>
