@@ -515,7 +515,7 @@ input:checked+.slider::before {
 .card {
     position: relative;
     display: block;
-    width: 180px;
+    width: 200px;
     height: 260px;
     text-decoration: none;
     background-color: var(--branco);
@@ -523,7 +523,7 @@ input:checked+.slider::before {
     border-radius: 16px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px;
     max-width: 300px;
-    padding: 0px 20px 20px 20px;
+    padding: 0px 10px 20px 10px;
     margin: auto;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
@@ -546,7 +546,7 @@ input:checked+.slider::before {
 }
 
 .card-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: normal;
     color: var(--azul);
     margin-bottom: 0.5rem;
