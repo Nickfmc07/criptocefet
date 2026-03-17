@@ -74,7 +74,7 @@ function textMatrixToNumericMatrix(letterMatrix) {
         for (let j = 0; j < letterMatrix[0].length; j++)
             numericMatrix[i][j] = alphabetMap.get(letterMatrix[i][j])
 
-    return numericMatrix
+    return numericMatrix 
 }
 
 function numericMatrixToTextMatrix(numericMatrix) {

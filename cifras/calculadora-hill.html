@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CriptoCefet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" href="../imgs/logo.png">
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px 0;
+            width: 100%;
+            padding-right: 0;
+            padding-left: 0;
+            margin-right: 5vw;
+            margin-left: 5vw;
+            width: 90vw;
+            min-height: 0 !important;
+        }
+
+        .linha {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .modulo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 20vw;
+            height: fit-content;
+            padding: 1vh 1vw 3vh 1vw;
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px;
+            border-radius: 8px;
+        }
+
+        .modulo>p {
+            text-align: center;
+            margin: 1vh 0 3vh 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            margin: 0;
+            border: 1px solid lightgray;
+        }
+
+        input[type="radio"] {
+            margin: 0 5px 0 0;
+        }
+
+        header {
+            margin-bottom: 3vh;
+        }
+
+        button {
+            display: block;
+            padding: 5px 10px;
+            color: white;
+            background-color: #4576e0;
+            border-radius: 13px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .ui {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 0.5vw;
+            margin-bottom: 1.5vh;
+        }
+
+        .ui-button {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            padding: 5px;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            background-color: #3166da;
+        }
+
+        .matriz2 {
+            border-left: solid 3px lightgray;
+            border-right: solid 3px lightgray;
+            border-radius: 10px;
+            width: fit-content;
+            padding: 0.5vh 6px;
+            display: grid;
+            grid-template-rows: repeat(2, 25px);
+            grid-auto-columns: 27px;
+            grid-auto-flow: column;
+            gap: 2px;
+            margin: 0 auto;
+        }
+
+        .matriz3 {
+            border-left: solid 3px lightgray;
+            border-right: solid 3px lightgray;
+            border-radius: 10px;
+            width: fit-content;
+            padding: 0.5vh 6px;
+            display: grid;
+            grid-template-rows: repeat(3, 25px);
+            grid-auto-columns: 27px;
+            grid-auto-flow: column;
+            gap: 2px;
+        }
+
+        .celula {
+            margin: 2px;
+            width: fit-content;
+            width: 16px;
+            height: 16px;
+            align-items: center;
+            justify-items: center;
+            border: 3px solid lightgray;
+            border-radius: 5px;
+            font-size: 1em;
+            font-family: 'Inter', sans-serif;
+        }
+
+        #ordem {
+            position: absolute;
+            height: fit-content;
+        }
+
+        #ordem>button {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            margin-top: 1.5vh;
+            background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.3;
+            text-align: center;
+            width: 100%;
+            max-width: 180px;
+            padding: 6px 20px;
+            border: none;
+            border-radius: 14px;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3),
+                0 2px 4px -1px rgba(59, 130, 246, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #4338CA 0%, #2563EB 100%);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4),
+                0 4px 6px -2px rgba(59, 130, 246, 0.2);
+        }
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px -1px rgba(59, 130, 246, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                overflow-y: auto;
+            }
+
+            main {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 2vh 1vw;
+                margin: 0 auto;
+            }
+
+            .modulo {
+                width: 90vw;
+                margin-bottom: 3vh;
+            }
+
+            #ordem {
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                gap: 6vw;
+                justify-content: center;
+                margin-top: -4vh;
+                margin-bottom: -3vh;
+            }
+
+            .linha {
+                flex-direction: column;
+            }
+
+            .input-edit-group > input {
+                width: 60vw !important;
+            }
+
+            .input-edit-group > button {
+                width: 8vw !important;
+            }
+        }
+
+        .input-edit-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .input-edit-group>input {
+            border-radius: 3px 0px 0px 3px;
+            height: 22px;
+            width: 16vw;
+        }
+
+        .btn-edit {
+            cursor: pointer;
+            height: 26px;
+            width: 26px;
+            padding: 5px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 3px 3px 0;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-edit:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-edit img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-edit:hover {
+            transform: none;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4),
+                0 4px 6px -2px rgba(59, 130, 246, 0.2);
+        }
+
+        p.alerta {
+            font-size: small;
+            font-weight: bold;
+            color: red;
+            margin: 0;
+        }
+    </style>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.1/math.min.js"></script>
+</head>
+
+<body>
+    <header></header>
+    <script src="../components/importHeader.js"></script>
+
+    <main>
+        <div id="ordem">
+            <button id="2x2" style="margin-bottom: 3vh;"><img src="../imgs/apps.png" alt="2x2"></button>
+            <button id="3x3"><img src="../imgs/grid.png" alt="3x3"></button>
+            <button id="limpar-tudo"><img src="../imgs/broom.png" alt="limpar-tudo"></button>
+        </div>
+        <div class="linha">
+            <div class="modulo">
+                <p>Chave</p>
+                <div style="margin-bottom: 1.5vh;" class="matriz2 matriz" id="chave">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                </div>
+                <p class="alerta hidden" id="det-alerta">O determinante não é coprimo com 26</p>
+                <p class="alerta hidden" id="ci-alerta">Preencha as células vazias!</p>
+                <button id="calc-inversa">Calcular Inversa</button>
+            </div>
+
+            <div class="modulo">
+                <p>Chave Inversa</p>
+                <div style="margin-bottom: 1.5vh;" class="matriz2 matriz" id="chave-inversa">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                </div>
+                <p class="alerta hidden" id="ch-alerta">Preencha as células vazias!</p>
+                <button id="calc-chave">Calcular Chave</button>
+            </div>
+        </div>
+        <div class="linha">
+            <div class="modulo">
+                <p>Mensagem Original</p>
+                <div class="input-edit-group">
+                    <input type="text" id="m-texto" disabled>
+                    <button type="button" id="btn-m-texto" class="btn-edit">
+                        <img src="../imgs/pencil.png" alt="Editar">
+                    </button>
+                </div>
+                <br>
+                <div class="matriz2 matriz" id="m">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                </div>
+                <div class="ui">
+                    <button class="ui-button" id="m-menos"><img src="../imgs/minus.png"></button>
+                    <button class="ui-button" id="m-mais"><img src="../imgs/plus.png"></button>
+                </div>
+                <p class="alerta hidden" id="m-alerta">Preencha as células vazias!</p>
+                <button id="cifrar">Cifrar</button>
+            </div>
+
+            <div style="grid-row: 2;" class="modulo">
+                <p>Mensagem Cifrada</p>
+                <div class="input-edit-group">
+                    <input type="text" id="c-texto" disabled>
+                    <button type="button" id="btn-c-texto" class="btn-edit">
+                        <img src="../imgs/pencil.png" alt="Editar">
+                    </button>
+                </div>
+                <br>
+                <div class="matriz2 matriz" id="c">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                    <input type="number" class="celula">
+                </div>
+                <div class="ui">
+                    <button class="ui-button" id="c-menos"><img src="../imgs/minus.png"></button>
+                    <button class="ui-button" id="c-mais"><img src="../imgs/plus.png"></button>
+                </div>
+                <p class="alerta hidden" id="c-alerta">Preencha as células vazias!</p>
+                <button id="decodificar">Decodificar</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../scripts/calculadora-hill.js"></script>
+</body>
+
+</html>
