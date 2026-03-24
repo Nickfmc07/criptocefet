@@ -4,14 +4,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CriptoCefet</title>
+    <title>Sobre - CriptoCEFET</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet">
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos básicos de reset e tipografia */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        section {
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        /* 1. Seção Sobre */
+        .sobre-projeto {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .sobre-projeto p {
+            font-size: 1.1em;
+            text-align: justify;
+        }
+
+        /* 2. Seção Eventos (Carrossel via CSS) */
+        .carrossel-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding-bottom: 10px;
+        }
+
+        /* Ocultar barra de rolagem para um visual mais limpo */
+        .carrossel-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .carrossel-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        .evento-card {
+            flex: 0 0 300px;
+            scroll-snap-align: start;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .evento-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .evento-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .evento-info h3 {
+            margin: 0 0 5px;
+            font-size: 1.2em;
+        }
+
+        .evento-info span {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* 3. Seção Autores */
+        .autores-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .autor-card {
+            text-align: center;
+            max-width: 200px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease;
+        }
+
+        .autor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .autor-foto {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #3498db;
+            margin-bottom: 15px;
+        }
+
+        .autor-nome {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .autor-descricao {
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,19 +154,71 @@
     </header>
 
     <main class="container" id="m">
-        <h2 id="main-title">O que é o Criptocefet?</h2>
-        <p id="description">
-            O CriptoCefet é um projeto de extensão voltado para criar uma plataforma de estudos com conteúdo interativo
-            sobre Criptografia e Matemática.
+        <section class="sobre-projeto" id="sobre">
+        <h2>Sobre o CriptoCEFET</h2>
+        <p>
+            O CriptoCEFET é um projeto de extensão focado no ensino de criptografia de forma acessível e interativa. 
+            Nosso objetivo é desmistificar os conceitos de segurança da informação e matemática aplicados à criptografia, 
+            oferecendo um site interativo onde os usuários podem aprender, testar algoritmos e compreender como seus dados 
+            são protegidos no ambiente digital.
         </p>
-        <br>
-        <p>Criadores:</p>
-        <ul>
-            <li>Clístenes Lopes da Cunha, professor no CEFET-MG</li>
-            <li>Divane Aparecida de Moraes Dantas, professora no CEFET-MG</li>
-            <li>Izabela Marques de Oliveira, professora no CEFET-MG</li>
-            <li>Nícolas Francisco Martins Chagas | <a href="https://github.com/Nickfmc07">GitHub</a></li>
-        </ul>
+    </section>
+
+    <section id="eventos">
+        <h2>Nossos Eventos</h2>
+        <div class="carrossel-container">
+            <div class="evento-card">
+                <img src="placeholder-evento1.jpg" alt="Foto do Evento 1">
+                <div class="evento-info">
+                    <h3>Semana de Tecnologia</h3>
+                    <span>15 de Maio de 2026</span>
+                </div>
+            </div>
+            <div class="evento-card">
+                <img src="placeholder-evento2.jpg" alt="Foto do Evento 2">
+                <div class="evento-info">
+                    <h3>Oficina de Criptografia</h3>
+                    <span>22 de Junho de 2026</span>
+                </div>
+            </div>
+            <div class="evento-card">
+                <img src="placeholder-evento3.jpg" alt="Foto do Evento 3">
+                <div class="evento-info">
+                    <h3>Apresentação no Simpósio</h3>
+                    <span>10 de Agosto de 2026</span>
+                </div>
+            </div>
+            </div>
+    </section>
+
+    <section id="autores">
+        <h2>Nossa Equipe</h2>
+        <div class="autores-grid">
+            <a href="link-para-perfil-1.html" class="autor-card">
+                <img src="foto-autor1.jpg" alt="Foto do Autor 1" class="autor-foto">
+                <div class="autor-nome">João Silva</div>
+                <div class="autor-descricao">Aluno de iniciação científica e desenvolvedor do site.</div>
+            </a>
+
+            <a href="link-para-perfil-2.html" class="autor-card">
+                <img src="foto-autor2.jpg" alt="Foto da Autora 2" class="autor-foto">
+                <div class="autor-nome">Maria Oliveira</div>
+                <div class="autor-descricao">Aluna de iniciação científica e pesquisadora de algoritmos.</div>
+            </a>
+
+            <a href="link-para-perfil-3.html" class="autor-card">
+                <img src="foto-autor3.jpg" alt="Foto do Autor 3" class="autor-foto">
+                <div class="autor-nome">Carlos Souza</div>
+                <div class="autor-descricao">Aluno de iniciação científica e UI/UX Designer.</div>
+            </a>
+
+            <a href="link-para-perfil-4.html" class="autor-card">
+                <img src="foto-autor4.jpg" alt="Foto da Autora 4" class="autor-foto">
+                <div class="autor-nome">Ana Costa</div>
+                <div class="autor-descricao">Aluna de iniciação científica e desenvolvedora do site.</div>
+            </a>
+        </div>
+    </section>
         <br>
         <p>Atribuições:</p>
         <ul>
