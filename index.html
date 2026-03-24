@@ -1,90 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CriptoCefet</title>
-    <link rel="icon" href="../imgs/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Criptocefet - Educação em Criptografia</title>
+    <link rel="stylesheet" href="home-style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+
     <header>
         <div id="site-brand">
-            <img id="logo" src="imgs/logo.png" alt="Logo CriptoCefet">
+            <img id="logo" src="../imgs/logo.png" alt="Logo CriptoCefet">
             <h1>CriptoCefet</h1>
         </div>
 
         <nav>
-            <a href="index.html">Início</a>
-            <a href="cifras/explorar-cifras.html">Explorar cifras</a>
-            <a href="conteudo/tudo.html">Conteúdo</a>
-            <a href="sobre-o-projeto.html">Sobre o Projeto</a>
+            <a href="../index.html">Início</a>
+            <a href="../cifras/explorar-cifras.html">Explorar cifras</a>
+            <a href="../conteudo/tudo.html">Conteúdo</a>
+            <a href="../sobre-o-projeto.html">Sobre o Projeto</a>
         </nav>
-    </header>
+</header>
+    <script src="/components/importHeader.js"></script>
 
-    <main class="container" id="m">
-        <h1 id="main-title" class="azul site-description-title"><i class="fi fi-rs-unlock"></i> Decifre a Matemática por
-            Trás da Criptografia!
-        </h1>
-        <p>O <strong>CriptoCefet</strong> é um site educacional interativo voltado para a <strong>exploração da
-                criptografia como aplicação real da matemática</strong>. Com uma abordagem interativa e didática,
-            buscamos conectar códigos secretos ao raciocínio lógico e à história da Matemática.</p>
+    <main>
+        <section id="inicio" class="hero">
+            <div class="hero-content">
+                <h1>Desvendando o Mundo da <span class="highlight">Criptografia</span> com a Matemática</h1>
+                <p>Seu portal definitivo para dominar a matemática aplicada e os algoritmos que protegem a era
+                    digital.<!-- Da cifra de César à criptografia pós-quântica. --></p>
+                <!-- <a href="#trilhas" class="btn-primary">Começar a Aprender</a> -->
+            </div>
+        </section>
 
-        <p>Ainda em <strong>fase de desenvolvimento</strong>, o CriptoCefet oferecerá recursos variados, como:</p>
-
-        <ul>
-            <li><strong>História da criptografia</strong>: das cifras clássicas aos desafios modernos.</li>
-            <li><strong>Conteúdos interativos</strong> de cifras e conceitos matemáticos aplicados.</li>
-            <li><strong>Planos de aula</strong> prontos para professores utilizarem em sala de aula.</li>
-        </ul>
-
-        <p>O site foi pensado para atender <strong>professores, estudantes do Ensino Fundamental II e Médio</strong>,
-            além de <strong>curiosos de todas as idades</strong> que queiram aprender de forma prática e envolvente como
-            a matemática pode ser usada para decifrar segredos.</p>
-
-
-        <p>Fique ligado: estamos construindo uma plataforma para que aprender matemática nunca mais pareça sem
-            propósito. Aqui, cada número pode ser uma chave — e cada aula, uma missão!</p>
-        <br>
-        <h3 class="azul">Explore nosso conteúdo: </h3>
-
-        <div class="card-container">
-            <a href="cifras/cesar.html" class="card">
-                <h2 class="card-title">Cifra de César</h2>
-                <p class="card-description">Clique aqui para aprender sobre a Cifra de César</p>
-                <div class="card-highlight"><i class="fi fi-rs-binary-lock"></i></div>
-                <ul class="card-list">
-                    <li>Função Bijetiva</li>
-                    <li>Aritmética Modular</li>
-                </ul>
-            </a>
-            <a href="cifras/hill.html" class="card">
-                <h2 class="card-title">Cifra de Hill</h2>
-                <p class="card-description">Clique aqui para aprender sobre a Cifra de Hill</p>
-                <div class="card-highlight"><i class="fi fi-rs-grid-alt"></i></div>
-                <ul class="card-list">
-                    <li>Matrizes</li>
-                    <li>Aritmética Modular</li>
-                </ul>
-            </a>
-            <a href="cifras/calculadora-hill.html" class="card">
-                <h2 class="card-title">Calculadora de Hill</h2>
-                <p class="card-description">Use essa calculadora para cifrar e conferir resultados</p>
+        <section class="intro">
+            <h2>Explore nosso conteúdo</h2>
+            <div class="card-container">
+                <a href="cifras/cesar.html" class="card">
+                    <h2 class="card-title">Cifra de César</h2>
+                    <p class="card-description">Clique aqui para aprender sobre a Cifra de César</p>
+                    <div class="card-highlight"><i class="fi fi-rs-binary-lock"></i></div>
+                    <ul class="card-list">
+                        <li>Função Bijetiva</li>
+                        <li>Aritmética Modular</li>
+                    </ul>
+                </a>
+                <a href="cifras/hill.html" class="card">
+                    <h2 class="card-title">Cifra de Hill</h2>
+                    <p class="card-description">Clique aqui para aprender sobre a Cifra de Hill</p>
+                    <div class="card-highlight"><i class="fi fi-rs-grid-alt"></i></div>
+                    <ul class="card-list">
+                        <li>Matrizes</li>
+                        <li>Aritmética Modular</li>
+                    </ul>
+                </a>
+                <a href="cifras/calculadora-hill.html" class="card">
+                    <h2 class="card-title">Calculadora de Hill</h2>
+                    <p class="card-description">Use essa calculadora para cifrar e conferir resultados</p>
+                    <div class="card-highlight"><i class="fi fi-rs-calculator"></i></div>
+                    <ul class="card-list">
+                        <li>Matrizes</li>
+                        <li>Aritmética Modular</li>
+                    </ul>
+                </a>
+            <a href="cifras/numeros-primos.html" class="card">
+                <h2 class="card-title">Testar Primos</h2>
+                <p class="card-description">Como testar se um número é primo.</p>
                 <div class="card-highlight"><i class="fi fi-rs-calculator"></i></div>
                 <ul class="card-list">
-                    <li>Matrizes</li>
-                    <li>Aritmética Modular</li>
+                    <li>Números primos</li>
+                    <li>Crivo de Erastóstenes</li>
                 </ul>
             </a>
-        </div>
-    </main>
+            </div>
+        </section>
 </body>
 
 </html>

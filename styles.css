@@ -59,17 +59,20 @@ img.icon-png {
     --preto: #000000;
     --texto-paragrafo: #4a5568;
 
-    /* Variáveis da Página Inicial integradas à paleta */
-    --bg-main: var(--branco);
-    --bg-secondary: #ffffff;
-    --bg-tertiary: var(--cinza-claro);
-    --text-primary: var(--preto);
-    --text-secondary: var(--texto-paragrafo);
-    --primary-color: var(--azul);
-    --primary-hover: var(--azul-escuro);
-    --accent-color: var(--ciano);
-    --border-color: var(--cinza);
-    --font-main: 'Inter', sans-serif;
+    --bg-main: #f8fafc; /* Cinza muito claro para o fundo geral */
+    --bg-secondary: #ffffff; /* Branco puro para cartões e seções de destaque */
+    --bg-tertiary: #f1f5f9; /* Cinza claro para rodapé e áreas de apoio */
+    
+    --text-primary: #1e293b; /* Cinza escuro (quase preto) para texto principal */
+    --text-secondary: #475569; /* Cinza médio para parágrafos e textos de apoio */
+    
+    --primary-color: #2563eb; /* Azul vibrante (um pouco mais escuro que o tema dark para contraste) */
+    --primary-hover: #1d4ed8;
+    
+    --accent-color: #059669; /* Verde esmeralda para botões secundários */
+    --border-color: #e2e8f0; /* Cor sutil para bordas */
+    
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
@@ -91,35 +94,95 @@ body {
     text-align: justify;
 }
 
+/* Header Principal */
 header {
-    background: linear-gradient(to right, var(--azul-escuro), var(--azul));
-    background-color: var(--azul-escuro);
+    background: linear-gradient(to right, var(--primary-hover), var(--primary-color));
     width: 100%;
-    height: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-#site-brand {
-    width: 800px;
+    min-height: 80px;
+    padding: 0 2rem;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    align-content: flex-end;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
+/* Área da Marca (Logo + Título) */
+#site-brand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+#site-brand h1 {
+    color: var(--bg-secondary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+#logo {
+    height: 50px;
+    width: auto;
+}
+
+/* Navegação (Menu) */
 nav {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: center;
-    gap: 30px;
-    width: 800px;
-    height: 22px;
+    align-items: center;
+    gap: 2rem;
+}
+
+nav a {
+    color: var(--bg-secondary);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+}
+
+/* Efeitos de Interação */
+nav a:hover {
+    color: var(--bg-tertiary);
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--bg-secondary);
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 
 main {
