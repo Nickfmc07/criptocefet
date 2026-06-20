@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de RSA - CriptoCefet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --azul-escuro: #07183c;
+            --azul: #1548b7;
+            --azul-claro: #5b89ec;
+            --ciano: #1abbdf;
+            --cinza: #d1d4e0;
+            --cinza-claro: #dfe5f1;
+            --cinza-escuro: #bcbec9;
+            --branco: #F5F8FA;
+            --preto: #000000;
+            --texto-paragrafo: #4a5568;
+
+
+            --card-bg: #ffffff;
+            --page-bg: var(--cinza-claro);
+            --border-soft: var(--cinza);
+            --text-main: var(--preto);
+            --text-muted: var(--texto-paragrafo);
+            --danger: #c0392b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--azul-escuro), var(--azul));
+            width: 100%;
+            min-height: 80px;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            color: white;
+        }
+
+        /* Navegação (Menu) */
+        nav {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--bg-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        /* Efeitos de Interação */
+        nav a:hover {
+            color: var(--bg-tertiary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--bg-secondary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+
+        /* Área da Marca (Logo + Título) */
+        #site-brand {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #site-brand h1 {
+            color: var(--bg-secondary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        #logo {
+            height: 50px;
+            width: auto;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+
+            background: var(--page-bg);
+            color: var(--text-main);
+        }
+
+
+        .page-title {
+            text-align: center;
+            color: var(--azul);
+
+            font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 0 0 36px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .page-title svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--azul);
+        }
+
+
+        .rsa-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 760px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        .rsa-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-soft);
+            border-radius: 14px;
+            padding: 22px 24px 26px;
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rsa-card h2 {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 0 0 16px;
+            color: var(--azul);
+
+            font-family: 'Inter', sans-serif;
+        }
+
+
+        .field-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            display: block;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+
+        .rsa-container input[type="text"],
+        .rsa-container input[type="number"],
+        .rsa-container textarea {
+            width: 100%;
+            border: 1px solid var(--cinza);
+            background: var(--branco);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin-left: 0;
+
+            box-shadow: none;
+        }
+
+        .rsa-container textarea {
+            resize: vertical;
+            min-height: 64px;
+        }
+
+        .rsa-container input:focus,
+        .rsa-container textarea:focus {
+            outline: none;
+            border-color: var(--azul-claro);
+            box-shadow: 0 0 0 3px rgba(91, 137, 236, 0.18);
+        }
+
+
+        .grid-pad {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0 18px;
+        }
+
+        .keypad {
+            border: 1.5px dashed var(--cinza-escuro);
+            border-radius: 10px;
+            padding: 14px;
+            display: grid;
+            grid-template-columns: repeat(2, 26px);
+            grid-template-rows: repeat(2, 26px);
+            gap: 6px;
+        }
+
+        .keypad span {
+            background: var(--cinza-claro);
+            border: 1px solid var(--cinza);
+            border-radius: 4px;
+        }
+
+
+        .small-note {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin: 2px 0 14px;
+            min-height: 1.2em;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+        }
+
+        .small-note.error {
+            color: var(--danger);
+        }
+
+        .small-note.success {
+            color: #1c8a52;
+        }
+
+
+        .result-box {
+            background: var(--branco);
+            border: 1px solid var(--cinza);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 0.92rem;
+            color: var(--text-main);
+            word-break: break-all;
+            min-height: 22px;
+            margin-bottom: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .result-box.empty {
+            color: var(--cinza-escuro);
+            font-style: italic;
+        }
+
+
+        .rsa-btn {
+            margin-top: auto;
+            border: none;
+            border-radius: 24px;
+            padding: 11px 18px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to right, var(--azul-escuro), var(--azul));
+            box-shadow: 0 4px 10px rgba(21, 72, 183, 0.3);
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+        }
+
+        .rsa-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(21, 72, 183, 0.38);
+        }
+
+        .rsa-btn:active {
+            transform: translateY(0);
+        }
+
+        .rsa-btn:disabled {
+            background: var(--cinza-escuro);
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .rsa-btn.outline {
+            background: transparent;
+            border: 1.5px solid var(--azul);
+            color: var(--azul);
+            box-shadow: none;
+        }
+
+        .rsa-btn.outline:hover {
+            background: rgba(21, 72, 183, 0.07);
+            transform: translateY(-2px);
+        }
+
+
+        .key-pair-display {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .key-chip {
+            flex: 1;
+            background: var(--cinza-claro);
+            border: 1px solid var(--cinza);
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 0.82rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .key-chip b {
+            display: block;
+            color: var(--azul);
+
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 2px;
+        }
+
+        .key-chip span {
+            word-break: break-all;
+            font-size: 0.85rem;
+            color: var(--texto-paragrafo);
+        }
+
+
+        .toggle-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 16px;
+            background: var(--cinza-claro);
+            border-radius: 24px;
+            padding: 4px;
+        }
+
+        .toggle-row button {
+            flex: 1;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            padding: 7px 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .toggle-row button.active {
+            background: linear-gradient(to right, var(--azul-escuro), var(--azul));
+            color: #fff;
+            box-shadow: 0 2px 6px rgba(21, 72, 183, 0.3);
+        }
+
+
+        .blocks-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .block-pill {
+            background: var(--cinza-claro);
+            border: 1px solid var(--cinza);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--azul-escuro);
+        }
+
+        main {
+            padding: 40px 20px 70px;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <script src="../components/importHeader.js"></script>
+
+    <main>
+        <h1 class="page-title">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5zm0 2a3 3 0 0 1 3 3v3H9V6a3 3 0 0 1 3-3z" />
+            </svg>
+            Calculadora de RSA
+        </h1>
+
+        <div class="rsa-container">
+
+            <div class="row">
+                <!-- Geração de chaves -->
+                <div class="rsa-card">
+                    <h2>Geração de Chaves</h2>
+
+                    <span class="field-label">Número primo p</span>
+                    <div class="input-row">
+                        <input type="number" id="inputP" placeholder="ex: 61">
+                    </div>
+
+                    <span class="field-label">Número primo q</span>
+                    <div class="input-row">
+                        <input type="number" id="inputQ" placeholder="ex: 53">
+                    </div>
+
+                    <div id="msgChaves" class="small-note"></div>
+
+                    <div class="key-pair-display">
+                        <div class="key-chip">
+                            <b>Chave pública (e, n)</b>
+                            <span id="pubKeyOut"></span>
+                        </div>
+                        <div class="key-chip">
+                            <b>Chave privada (d, n)</b>
+                            <span id="privKeyOut"></span>
+                        </div>
+                    </div>
+
+                    <button class="rsa-btn" onclick="gerarChaves()">Gerar Chaves</button>
+                </div>
+
+                <!-- Detalhes / parâmetros -->
+                <div class="rsa-card">
+                    <h2>Parâmetros Calculados</h2>
+                    <br><br>
+                    <div class="key-pair-display">
+                        <div class="key-chip">
+                            <b>n = p × q</b>
+                            <span id="paramN"></span>
+                        </div>
+                        <div class="key-chip">
+                            <b>φ(n) = (p-1)(q-1)</b>
+                            <span id="paramPhi"></span>
+                        </div>
+                    </div>
+
+                    <div class="key-pair-display">
+                        <div class="key-chip">
+                            <b>e (expoente público)</b>
+                            <span id="paramE"></span>
+                        </div>
+                        <div class="key-chip">
+                            <b>d (expoente privado)</b>
+                            <span id="paramD"></span>
+                        </div>
+                    </div>
+
+                    <button class="rsa-btn outline" onclick="limparChaves()">Limpar Chaves</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Cifrar -->
+                <div class="rsa-card">
+                    <h2>Cifragem</h2>
+
+                    <span class="field-label" id="labelEntradaCifrar">Mensagem (número)</span>
+                    <div class="input-row">
+                        <input type="text" id="inputMensagem">
+                    </div>
+
+                    <div id="msgCifrar" class="small-note"></div>
+
+                    <span class="field-label">Resultado cifrado</span>
+                    <div id="resultadoCifrado" class="result-box empty">Nenhum resultado ainda</div>
+
+                    <button class="rsa-btn" onclick="cifrarMensagem()">Cifrar</button>
+                </div>
+
+                <!-- Decifrar -->
+                <div class="rsa-card">
+                    <h2>Decodificação</h2>
+
+                    <span class="field-label">Mensagem cifrada</span>
+                    <div class="input-row">
+                        <input type="text" id="inputCifrado">
+                    </div>
+
+                    <div id="msgDecifrar" class="small-note"></div>
+
+                    <span class="field-label">Mensagem decodificada</span>
+                    <div id="resultadoDecifrado" class="result-box empty">Nenhum resultado ainda</div>
+
+                    <button class="rsa-btn" onclick="decifrarMensagem()">Decodificar</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Seleção dos elementos do DOM
+        const inputP = document.getElementById("inputP");
+        const inputQ = document.getElementById("inputQ");
+        const msgChaves = document.getElementById("msgChaves");
+        const pubKeyOut = document.getElementById("pubKeyOut");
+        const privKeyOut = document.getElementById("privKeyOut");
+        const paramN = document.getElementById("paramN");
+        const paramPhi = document.getElementById("paramPhi");
+        const paramE = document.getElementById("paramE");
+        const paramD = document.getElementById("paramD");
+        const inputMensagem = document.getElementById("inputMensagem");
+        const msgCifrar = document.getElementById("msgCifrar");
+        const resultadoCifrado = document.getElementById("resultadoCifrado");
+        const inputCifrado = document.getElementById("inputCifrado");
+        const msgDecifrar = document.getElementById("msgDecifrar");
+        const resultadoDecifrado = document.getElementById("resultadoDecifrado");
+
+        // Variáveis globais de controle de estado
+        let keysExist = false;
+        let currentN = null;
+        let currentE = null;
+        let currentD = null;
+
+        function gcd(a, b) {
+            while (b !== 0n) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        function modPow(base, exponent, modulus) {
+            if (modulus === 1n) return 0n;
+            let result = 1n;
+            base = base % modulus;
+            while (exponent > 0n) {
+                if (exponent % 2n === 1n) {
+                    result = (result * base) % modulus;
+                }
+                exponent = exponent / 2n;
+                base = (base * base) % modulus;
+            }
+            return result;
+        }
+
+        function isPrime(n) {
+            if (n < 2n) return false;
+            if (n === 2n || n === 3n) return true;
+            if (n % 2n === 0n) return false;
+            let s = 0n;
+            let d = n - 1n;
+            while (d % 2n === 0n) {
+                d /= 2n;
+                s++;
+            }
+            const bases = [2n, 3n, 5n, 7n, 11n];
+            for (const a of bases) {
+                if (a >= n) continue;
+                let x = modPow(a, d, n);
+                if (x === 1n || x === n - 1n) continue;
+                let composite = true;
+
+                for (let r = 1n; r < s; r++) {
+                    x = (x * x) % n;
+                    if (x === n - 1n) {
+                        composite = false;
+                        break;
+                    }
+                }
+                if (composite) return false;
+            }
+            return true;
+        }
+
+        function chooseE(phi) {
+            const options = [65537n, 17n, 7n, 5n, 3n];
+            for (const c of options) {
+                if (c < phi && gcd(c, phi) === 1n) return c;
+            }
+            for (let c = 3n; c < phi; c += 2n) {
+                if (gcd(c, phi) === 1n) return c;
+            }
+            return null;
+        }
+
+        function modInverse(a, m) {
+            let m0 = m;
+            let x0 = 0n;
+            let x1 = 1n;
+
+            if (m === 1n) return 0n;
+
+            while (a > 1n) {
+                let q = a / m;
+                let temp = m;
+                m = a % m;
+                a = temp;
+
+                temp = x0;
+                x0 = x1 - q * x0;
+                x1 = temp;
+            }
+
+            if (x1 < 0n) x1 += m0;
+            return x1;
+        }
+
+        function gerarChaves() {
+            msgChaves.innerText = "";
+            msgChaves.classList.remove("error", "success");
+
+            if (!inputP.value || !inputQ.value) {
+                msgChaves.classList.add("error");
+                msgChaves.innerText = "Por favor, insira ambos os números primos p e q.";
+                return;
+            }
+
+            let p, q;
+            try {
+                p = BigInt(inputP.value);
+                q = BigInt(inputQ.value);
+            } catch (err) {
+                msgChaves.classList.add("error");
+                msgChaves.innerText = "Por favor, insira números inteiros válidos.";
+                return;
+            }
+
+            if (!isPrime(p)) {
+                msgChaves.classList.add("error");
+                msgChaves.innerText = "O número p não é primo.";
+                return;
+            }
+            if (!isPrime(q)) {
+                msgChaves.classList.add("error");
+                msgChaves.innerText = "O número q não é primo.";
+                return;
+            }
+            if (p === q) {
+                msgChaves.classList.add("error");
+                msgChaves.innerText = "Os números p e q devem ser diferentes para um RSA seguro.";
+                return;
+            }
+
+            let n = p * q;
+            let phi = (p - 1n) * (q - 1n);
+            let e = chooseE(phi);
+
+            if (!e) {
+                msgChaves.classList.add("error");
+                msgChaves.innerText = "Não foi possível encontrar um expoente público 'e' coprimo a φ(n).";
+                return;
+            }
+
+            let d = modInverse(e, phi);
+
+            currentN = n;
+            currentE = e;
+            currentD = d;
+            keysExist = true;
+
+            pubKeyOut.innerText = `(${e}, ${n})`;
+            privKeyOut.innerText = `(${d}, ${n})`;
+            paramN.innerText = n.toString();
+            paramPhi.innerText = phi.toString();
+            paramE.innerText = e.toString();
+            paramD.innerText = d.toString();
+
+            msgChaves.classList.add("success");
+            msgChaves.innerText = "Chaves geradas com sucesso!";
+        }
+
+        function limparChaves() {
+            inputP.value = "";
+            inputQ.value = "";
+            msgChaves.innerText = "";
+            msgChaves.classList.remove("error", "success");
+
+            pubKeyOut.innerText = "";
+            privKeyOut.innerText = "";
+            paramN.innerText = "";
+            paramPhi.innerText = "";
+            paramE.innerText = "";
+            paramD.innerText = "";
+
+            currentN = null;
+            currentE = null;
+            currentD = null;
+            keysExist = false;
+        }
+
+        function cifrarMensagem() {
+            msgCifrar.innerText = "";
+            msgCifrar.classList.remove("error", "success");
+            resultadoCifrado.innerText = "Nenhum resultado ainda";
+            resultadoCifrado.classList.add("empty");
+
+            if (!keysExist || !currentN || !currentE) {
+                msgCifrar.classList.add("error");
+                msgCifrar.innerText = "As chaves não foram geradas. Crie as chaves primeiro.";
+                return;
+            }
+
+            if (inputMensagem.value.trim() === "") {
+                msgCifrar.classList.add("error");
+                msgCifrar.innerText = "Por favor, digite uma mensagem.";
+                return;
+            }
+
+            let m;
+            try {
+                m = BigInt(inputMensagem.value);
+            } catch (err) {
+                msgCifrar.classList.add("error");
+                msgCifrar.innerText = "A mensagem deve ser um número inteiro.";
+                return;
+            }
+
+            if (m >= currentN) {
+                msgCifrar.classList.add("error");
+                msgCifrar.innerText = "Erro: A mensagem numérica deve ser estritamente menor que n.";
+                return;
+            }
+
+            let c = modPow(m, currentE, currentN);
+
+            resultadoCifrado.innerText = c.toString();
+            resultadoCifrado.classList.remove("empty");
+            msgCifrar.classList.add("success");
+            msgCifrar.innerText = "Mensagem cifrada com sucesso!";
+        }
+
+        function decifrarMensagem() {
+            msgDecifrar.innerText = "";
+            msgDecifrar.classList.remove("error", "success");
+            resultadoDecifrado.innerText = "Nenhum resultado ainda";
+            resultadoDecifrado.classList.add("empty");
+
+            if (!keysExist || !currentN || !currentD) {
+                msgDecifrar.classList.add("error");
+                msgDecifrar.innerText = "As chaves não foram geradas. Crie as chaves primeiro.";
+                return;
+            }
+
+            if (inputCifrado.value.trim() === "") {
+                msgDecifrar.classList.add("error");
+                msgDecifrar.innerText = "Por favor, insira a mensagem cifrada.";
+                return;
+            }
+
+            let c;
+            try {
+                c = BigInt(inputCifrado.value);
+            } catch (err) {
+                msgDecifrar.classList.add("error");
+                msgDecifrar.innerText = "A mensagem cifrada deve ser um número inteiro válido.";
+                return;
+            }
+
+            if (c >= currentN) {
+                msgDecifrar.classList.add("error");
+                msgDecifrar.innerText = "Erro: O número cifrado deve ser menor que n.";
+                return;
+            }
+
+            let m = modPow(c, currentD, currentN);
+
+            resultadoDecifrado.innerText = m.toString();
+            resultadoDecifrado.classList.remove("empty");
+            msgDecifrar.classList.add("success");
+            msgDecifrar.innerText = "Mensagem decodificada com sucesso!";
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const btnGerar = document.querySelector("button[onclick='gerarChaves()']");
+            const btnLimpar = document.querySelector("button[onclick='limparChaves()']");
+            const btnCifrar = document.querySelector("button[onclick='cifrarMensagem()']");
+            const btnDecifrar = document.querySelector("button[onclick='decifrarMensagem()']");
+
+            if (btnGerar) {
+                btnGerar.removeAttribute("onclick");
+                btnGerar.addEventListener("click", gerarChaves);
+            }
+            if (btnLimpar) {
+                btnLimpar.removeAttribute("onclick");
+                btnLimpar.addEventListener("click", limparChaves);
+            }
+            if (btnCifrar) {
+                btnCifrar.removeAttribute("onclick");
+                btnCifrar.addEventListener("click", cifrarMensagem);
+            }
+            if (btnDecifrar) {
+                btnDecifrar.removeAttribute("onclick");
+                btnDecifrar.addEventListener("click", decifrarMensagem);
+            }
+        });
+    </script>
+</body>
+
+</html>

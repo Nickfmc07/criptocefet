@@ -104,21 +104,6 @@ nav a:hover::after {
     width: 100%;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        padding: 1rem;
-        gap: 1rem;
-    }
-    
-    nav {
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-}
-
 /* --- Hero Section (Área de Destaque) --- */
 .hero {
     text-align: center;
@@ -132,12 +117,6 @@ nav a:hover::after {
     font-size: 3rem;
     margin-bottom: 1rem;
     color: var(--text-primary);
-}
-
-@media (max-width: 450px) {
-    .hero h1 {
-        font-size: 9vw;
-    }
 }
 
 .highlight {
@@ -306,4 +285,25 @@ section h2 {
     background-color: #e0e7ff;
     color: var(--primary-color);
     border-color: #c7d2fe;
+}
+
+/* Responsividade */
+@media (max-width: 450px) {
+    .hero h1 {
+        font-size: 9vw;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
