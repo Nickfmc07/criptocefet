@@ -1,25 +1,20 @@
-/* Matrizes */
 const chaveEl = document.getElementById("chave")
 const chaveInversaEl = document.getElementById("chave-inversa")
 const mEl = document.getElementById("m")
 const cEl = document.getElementById("c")
 const matrizes = document.querySelectorAll(".matriz")
 
-/* Inputs de texto */
 mTextoEl = document.getElementById("m-texto")
 cTextoEl = document.getElementById("c-texto")
 
-/* Botões para mudar a ordem das matrizes */
 const btn2x2El = document.getElementById("2x2")
 const btn3x3El = document.getElementById("3x3")
 
-/* Botões para adicionar/remover colunas */
 const btnMMaisEl = document.getElementById("m-mais")
 const btnMMenosEl = document.getElementById("m-menos")
 const btnCMaisEl = document.getElementById("c-mais")
 const btnCMenosEl = document.getElementById("c-menos")
 
-/* Botões para habilitar a edição de texto e inputs*/
 const inputMTexto = document.getElementById('m-texto');
 const btnMTexto = document.getElementById('btn-m-texto');
 const imgBtnMTexto = btnMTexto.querySelector('img');
@@ -27,26 +22,89 @@ const inputCTexto = document.getElementById('c-texto');
 const btnCTexto = document.getElementById('btn-c-texto');
 const imgBtnCTexto = btnCTexto.querySelector('img');
 
-/* Alerta de preenchimento inválido */
 const alertaMEl = document.getElementById("m-alerta")
 const alertaCEl = document.getElementById("c-alerta")
 const alertaCIEl = document.getElementById("ci-alerta")
 const alertaCHEl = document.getElementById("ch-alerta")
 const alertaDetEl = document.getElementById("det-alerta")
 
-/* Botões Principais */
 const btnCifrarEl = document.getElementById("cifrar")
 const btnDecodificarEl = document.getElementById("decodificar")
 const btnCalcInversaEl = document.getElementById("calc-inversa")
 const btnCalcChaveEl = document.getElementById("calc-chave")
 const btnLimparEl = document.getElementById("limpar-tudo")
 
+const btnModoEl = document.getElementById("modo")
+const btnOrdemEl = document.getElementById("ordem-preenchimento")
+const brutoMEl = document.getElementById("m-bruto")
+const brutoCEl = document.getElementById("c-bruto")
+
+let modoModular = true;
+let ordemPreenchimento = "coluna"; // "coluna": próxima letra abaixo | "linha": próxima letra ao lado
+let ultimoBrutoM = null; // resultado de K^-1 * C antes do módulo
+let ultimoBrutoC = null; // resultado de K * M antes do módulo
+
+function atualizarBotaoModo() {
+    if (!btnModoEl) return;
+    if (modoModular) {
+        btnModoEl.textContent = "Mod 26";
+        btnModoEl.title = "Modo de inversão da matriz: Mod 26";
+    } else {
+        btnModoEl.textContent = "Normal";
+        btnModoEl.title = "Modo de inversão da matriz: Normal (sem aplicar mod 26)";
+    }
+}
+
+function atualizarBotaoOrdem() {
+    if (!btnOrdemEl) return;
+    if (ordemPreenchimento === "coluna") {
+        btnOrdemEl.textContent = "↓";
+        btnOrdemEl.title = "Ordem de preenchimento: vertical";
+    } else {
+        btnOrdemEl.textContent = "→";
+        btnOrdemEl.title = "Ordem de preenchimento: horizontal";
+    }
+}
+
+if (btnModoEl) {
+    btnModoEl.addEventListener("click", () => {
+        modoModular = !modoModular;
+        atualizarBotaoModo();
+    });
+    atualizarBotaoModo();
+}
+
+if (btnOrdemEl) {
+    btnOrdemEl.addEventListener("click", () => {
+        ordemPreenchimento = ordemPreenchimento === "coluna" ? "linha" : "coluna";
+        atualizarBotaoOrdem();
+    });
+    atualizarBotaoOrdem();
+}
+
+function atualizarMatrizBruta(containerEl, matrizMatematica) {
+    if (!containerEl) return;
+    containerEl.innerHTML = "";
+    if (!matrizMatematica) return;
+
+    const linhas = matrizMatematica.length;
+    containerEl.className = `matriz${linhas} matriz-bruta`;
+
+    const colunas = math.transpose(matrizMatematica);
+    colunas.flat().forEach(val => {
+        const celula = document.createElement("input");
+        celula.type = "text";
+        celula.disabled = true;
+        celula.classList.add("celula");
+        celula.value = Number.isInteger(val) ? val : Math.round(val * 10000) / 10000;
+        containerEl.appendChild(celula);
+    });
+}
+
 function limparTudo() {
-    // Limpar os campos de texto contínuo
     inputMTexto.value = "";
     inputCTexto.value = "";
 
-    // Restaurar os inputs de texto para o modo bloqueado (ícone de lápis)
     inputMTexto.disabled = true;
     imgBtnMTexto.src = '../imgs/pencil.png';
     imgBtnMTexto.alt = 'Editar';
@@ -55,12 +113,15 @@ function limparTudo() {
     imgBtnCTexto.src = '../imgs/pencil.png';
     imgBtnCTexto.alt = 'Editar';
 
-    // Limpar os valores de todas as matrizes
     document.querySelectorAll(".matriz input").forEach(input => {
         input.value = "";
     });
 
-    // Esconder todos os alertas
+    if (brutoMEl) brutoMEl.innerHTML = "";
+    if (brutoCEl) brutoCEl.innerHTML = "";
+    ultimoBrutoM = null;
+    ultimoBrutoC = null;
+
     alertaMEl.classList.add("hidden");
     alertaCEl.classList.add("hidden");
     alertaCIEl.classList.add("hidden");
@@ -99,9 +160,7 @@ function pegarMatriz(matrizEl) {
 }
 
 function adicionarColuna(matrizEl) {
-    let ordem = 2
-    if (matrizEl.classList.contains("matriz3"))
-        ordem = 3 
+    const ordem = matrizEl.classList.contains("matriz2") ? 2 : 3;
     for (let i = 0; i < ordem; i++) {
         const input = document.createElement("input")
         input.type = "number"
@@ -152,7 +211,6 @@ function determinanteValido() {
     return math.gcd(detMod, 26) === 1;
 }
 
-/* Atribuindo funções aos botões */
 btn2x2El.addEventListener("click", () => ajustarTamanhoMatrizes(2));
 btn3x3El.addEventListener("click", () => ajustarTamanhoMatrizes(3));
 
@@ -163,14 +221,43 @@ btnCMenosEl.addEventListener("click", () => { removerColuna(cEl); })
 
 const alfabetoHill = "abcdefghijklmnopqrstuvwxyz";
 
-function adicionarColuna(matrizEl) {
-    const ordem = matrizEl.classList.contains("matriz2") ? 2 : 3;
-    for (let i = 0; i < ordem; i++) {
-        const input = document.createElement("input");
-        input.type = "number";
-        input.classList.add("celula");
-        matrizEl.appendChild(input);
+function letraParaNumero(letra) {
+    return alfabetoHill.indexOf(letra) + 1;
+}
+
+function numeroParaLetra(numero) {
+    const idx = Math.round(numero) - 1;
+    return alfabetoHill[idx] || '';
+}
+
+function indiceParaDom(indice, linhas, colunas) {
+    if (ordemPreenchimento === "linha") {
+        const r = Math.floor(indice / colunas);
+        const c = indice % colunas;
+        return c * linhas + r;
     }
+    return indice;
+}
+
+function preencherTextoNaMatriz(matrizEl, numeros) {
+    const linhas = matrizEl.classList.contains("matriz2") ? 2 : 3;
+    const colunas = Math.max(1, Math.ceil(numeros.length / linhas));
+    const totalCelulas = Math.max(linhas * colunas, linhas * linhas);
+
+    while (matrizEl.querySelectorAll('input').length < totalCelulas) {
+        adicionarColuna(matrizEl);
+    }
+    while (matrizEl.querySelectorAll('input').length > totalCelulas) {
+        removerColuna(matrizEl);
+    }
+
+    const inputsMatriz = matrizEl.querySelectorAll('input');
+    inputsMatriz.forEach(input => { input.value = 1; });
+
+    numeros.forEach((numero, indice) => {
+        const domIndex = indiceParaDom(indice, linhas, colunas);
+        inputsMatriz[domIndex].value = numero;
+    });
 }
 
 btnCTexto.addEventListener('click', () => {
@@ -185,18 +272,10 @@ btnCTexto.addEventListener('click', () => {
         imgBtnCTexto.alt = 'Editar';
         
         const texto = inputCTexto.value.toLowerCase().replace(/[^a-z]/g, '');
-        const numeros = texto.split('').map(char => alfabetoHill.indexOf(char));
+        const numeros = texto.split('').map(char => letraParaNumero(char));
         const matrizEl = document.getElementById('c');
-        const ordem = matrizEl.classList.contains('matriz2') ? 2 : 3;
-        
-        while (matrizEl.querySelectorAll('input').length < numeros.length) {
-            adicionarColuna(matrizEl);
-        }
 
-        const inputsMatriz = matrizEl.querySelectorAll('input');
-        inputsMatriz.forEach((input, index) => {
-            input.value = index < numeros.length ? numeros[index] : 0;
-        });
+        preencherTextoNaMatriz(matrizEl, numeros);
     }
 });
 
@@ -212,18 +291,10 @@ btnMTexto.addEventListener('click', () => {
         imgBtnMTexto.alt = 'Editar';
         
         const texto = inputMTexto.value.toLowerCase().replace(/[^a-z]/g, '');
-        const numeros = texto.split('').map(char => alfabetoHill.indexOf(char));
+        const numeros = texto.split('').map(char => letraParaNumero(char));
         const matrizEl = document.getElementById('m');
-        const ordem = matrizEl.classList.contains('matriz2') ? 2 : 3;
 
-        while (matrizEl.querySelectorAll('input').length < numeros.length) {
-            adicionarColuna(matrizEl);
-        }
-
-        const inputsMatriz = matrizEl.querySelectorAll('input');
-        inputsMatriz.forEach((input, index) => {
-            input.value = index < numeros.length ? numeros[index] : 0;
-        });
+        preencherTextoNaMatriz(matrizEl, numeros);
     }
 });
 
@@ -270,87 +341,83 @@ btnCalcChaveEl.addEventListener("click", ()=> {
 
 btnLimparEl.addEventListener("click", limparTudo);
 
-/* ========================================================
-   1. Funções Matemáticas Auxiliares (Lógica Pura)
-======================================================== */
-
-// Garante que o número fique positivo no módulo 26
 function mod26(n) {
-    return ((Math.round(n) % 26) + 26) % 26;
+    const r = ((Math.round(n) - 1) % 26 + 26) % 26;
+    return r + 1;
 }
 
-// Calcula o inverso modular de um número (ex: inverso do determinante)
 function inversoModular(a, m) {
-    a = mod26(a);
+    a = ((Math.round(a) % m) + m) % m;
     for (let x = 1; x < m; x++) {
         if ((a * x) % m === 1) return x;
     }
     return 1; 
 }
 
-// Multiplica duas matrizes aplicando o módulo 26 a cada elemento
-function multiplicarMatrizesMod26(matrizA, matrizB) {
+function multiplicarMatrizes(matrizA, matrizB, destino) {
     const produto = math.multiply(matrizA, matrizB);
+
+    if (destino === "c") ultimoBrutoC = produto;
+    if (destino === "m") ultimoBrutoM = produto;
+
     return produto.map(linha => linha.map(val => mod26(val)));
 }
 
-// Calcula a matriz inversa modular (K^-1 mod 26)
-function calcularMatrizInversaMod26(matriz) {
+function calcularInversaModular(matriz) {
     const d = Math.round(math.det(matriz));
-    const detMod = mod26(d);
+    const detMod = ((d % 26) + 26) % 26;
     const invDet = inversoModular(detMod, 26);
-    
-    // Math.inv dá a inversa real, multiplicamos pelo determinante para ter a adjunta
+
     const invReal = math.inv(matriz);
     const adjunta = math.multiply(d, invReal);
-    
-    // (Adjunta * Inverso do Determinante) mod 26
+
     return adjunta.map(linha => linha.map(val => mod26(val * invDet)));
 }
 
-/* ========================================================
-   2. Funções de Interface (DOM <-> Matemática)
-======================================================== */
-
-// Converte a matriz matemática (array de linhas) num texto contínuo
-function matrizParaTexto(matrizMatematica) {
-    // Lemos a matriz por colunas para formar o texto
-    const colunas = math.transpose(matrizMatematica);
-    const numeros = colunas.flat();
-    return numeros.map(num => alfabetoHill[num] || '').join('');
+function calcularInversaNormal(matriz) {
+    return math.inv(matriz);
 }
 
-// Pega os dados do DOM e transforma numa matriz real para o math.js
+function calcularMatrizInversaParaExibicao(matriz) {
+    return modoModular ? calcularInversaModular(matriz) : calcularInversaNormal(matriz);
+}
+
+function matrizParaTexto(matrizMatematica) {
+    let numeros;
+    if (ordemPreenchimento === "linha") {
+        numeros = matrizMatematica.flat();
+    } else {
+        const colunas = math.transpose(matrizMatematica);
+        numeros = colunas.flat();
+    }
+    return numeros.map(num => numeroParaLetra(num)).join('');
+}
+
 function lerMatrizDoDOM(matrizEl) {
-    // pegarMatriz() retorna array de colunas. Transpomos para termos matriz de linhas.
     const matrizColunas = pegarMatriz(matrizEl);
     return math.transpose(matrizColunas);
 }
 
-// Recebe uma matriz matemática e preenche os inputs do HTML visualmente
 function preencherMatrizUI(matrizEl, matrizMatematica) {
-    // Transpomos de volta para colunas (ordem visual do grid no HTML)
     const colunas = math.transpose(matrizMatematica);
     const valores = colunas.flat();
     
-    // Garante que temos inputs suficientes para colocar todos os valores
     while (matrizEl.querySelectorAll('input').length < valores.length) {
         adicionarColuna(matrizEl);
     }
     
-    // Limpa colunas em excesso (opcional para visual mais limpo)
     const ordem = matrizEl.classList.contains("matriz2") ? 2 : 3;
     while (matrizEl.querySelectorAll('input').length > Math.max(valores.length, ordem * ordem)) {
         removerColuna(matrizEl);
     }
 
-    // Preenche os valores
     const inputs = matrizEl.querySelectorAll('input');
     inputs.forEach((input, index) => {
         if (index < valores.length) {
-            input.value = valores[index];
+            const val = valores[index];
+            input.value = Number.isInteger(val) ? val : Math.round(val * 10000) / 10000;
         } else {
-            input.value = ""; // Limpa células não usadas se sobrarem
+            input.value = "";
         }
     });
 }
@@ -359,44 +426,39 @@ function preencherTextoUI(inputEl, texto) {
     inputEl.value = texto;
 }
 
-/* ========================================================
-   3. Funções Principais (Acionadas pelos Botões)
-======================================================== */
-
 function cifrar() {
     const K = lerMatrizDoDOM(chaveEl);
     const M = lerMatrizDoDOM(mEl);
     
-    // C = K * M (mod 26)
-    const C = multiplicarMatrizesMod26(K, M);
+    const C = multiplicarMatrizes(K, M, "c");
     
     preencherMatrizUI(cEl, C);
     preencherTextoUI(inputCTexto, matrizParaTexto(C));
+    atualizarMatrizBruta(brutoCEl, ultimoBrutoC);
 }
 
 function decodificar() {
     const K = lerMatrizDoDOM(chaveEl);
     const C = lerMatrizDoDOM(cEl);
     
-    // M = K^-1 * C (mod 26)
-    const Kinv = calcularMatrizInversaMod26(K);
-    const M = multiplicarMatrizesMod26(Kinv, C);
+    const Kinv = calcularInversaModular(K);
+    const M = multiplicarMatrizes(Kinv, C, "m");
     
     preencherMatrizUI(mEl, M);
     preencherTextoUI(inputMTexto, matrizParaTexto(M));
+    atualizarMatrizBruta(brutoMEl, ultimoBrutoM);
 }
 
 function calcChaveInversa() {
     const K = lerMatrizDoDOM(chaveEl);
-    const Kinv = calcularMatrizInversaMod26(K);
+    const KinvExibicao = calcularMatrizInversaParaExibicao(K);
     
-    preencherMatrizUI(chaveInversaEl, Kinv);
+    preencherMatrizUI(chaveInversaEl, KinvExibicao);
 }
 
 function calcChave() {
     const Kinv = lerMatrizDoDOM(chaveInversaEl);
-    // A inversa da inversa é a própria matriz original
-    const K = calcularMatrizInversaMod26(Kinv); 
+    const K = calcularMatrizInversaParaExibicao(Kinv); 
     
     preencherMatrizUI(chaveEl, K);
 }
