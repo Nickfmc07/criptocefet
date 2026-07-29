@@ -1,55 +1,604 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CriptoCefet</title>
+    <title>Sobre o Projeto - CriptoCefet</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --azul-principal: #1a56ec;
+            --azul-escuro: #123a9e;
+            --azul-claro: #eaf0fe;
+            --texto-escuro: #1a1a2e;
+            --texto-cinza: #5a5a72;
+            --branco: #ffffff;
+            --borda: #e2e8f7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--texto-escuro);
+            background: var(--branco);
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 60px;
+            background: linear-gradient(90deg, var(--azul-principal), #2f6bff);
+        }
+
+        #site-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #site-brand h1 {
+            color: var(--branco);
+            font-size: 1.4rem;
+        }
+
+        #logo {
+            width: 36px;
+            height: 36px;
+        }
+
+        nav {
+            display: flex;
+            gap: 32px;
+        }
+
+        nav a {
+            color: var(--branco);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            opacity: 1;
+            border-bottom: 2px solid var(--branco);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 90px 20px 70px;
+            background: linear-gradient(180deg, var(--azul-claro), var(--branco));
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            margin-bottom: 20px;
+        }
+
+        .hero .highlight {
+            color: var(--azul-principal);
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.15rem;
+            color: var(--texto-cinza);
+            line-height: 1.6;
+        }
+
+        section {
+            padding: 70px 60px;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+        }
+
+        /* Criadores */
+        .criadores-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        .criador {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            width: 100%;
+            max-width: 180px;
+            flex: 0 1 180px;
+        }
+
+        .criador-nome,
+        .criador-papel,
+        .criador-lattes {
+            width: 100%;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .criador:hover {
+            transform: translateY(-4px);
+        }
+
+        .criador:hover .criador-avatar {
+            border-color: var(--azul-principal);
+            box-shadow: 0 6px 18px rgba(26, 86, 236, 0.35);
+        }
+
+        .criador:hover .criador-lattes {
+            color: var(--azul-principal);
+        }
+
+        .criador:hover .criador-lattes svg {
+            transform: translate(2px, -2px);
+        }
+
+        .criador-avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--branco);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            border: 4px solid var(--azul-claro);
+            overflow: hidden;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .criador-avatar img {
+            width: calc(100% - 6px);
+            height: calc(100% - 6px);
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .criador-nome {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .criador-papel {
+            font-size: 0.9rem;
+            color: var(--texto-cinza);
+        }
+
+        .criador-lattes {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: var(--azul-principal);
+            margin-top: 6px;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .criador-lattes svg {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        /* Carrossel */
+        .carrossel-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .carrossel {
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(26, 86, 236, 0.15);
+            transition: height 0.4s ease;
+        }
+
+        .carrossel-track {
+            display: flex;
+            align-items: flex-start;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carrossel-slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .carrossel-imagem {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--azul-escuro);
+        }
+
+        .carrossel-imagem img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .carrossel-imagem img.imagem-vertical {
+            width: auto;
+            max-width: 100%;
+            max-height: 480px;
+            margin: 0 auto;
+        }
+
+        .carrossel-legenda {
+            background: var(--azul-escuro);
+            color: var(--branco);
+            padding: 16px 24px;
+            font-size: 1rem;
+        }
+
+        .carrossel-btn {
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            color: var(--azul-principal);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .carrossel-btn:hover {
+            background: var(--branco);
+        }
+
+        .carrossel-prev {
+            left: -22px;
+        }
+
+        .carrossel-next {
+            right: -22px;
+        }
+
+        .carrossel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--borda);
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .dot.active {
+            background: var(--azul-principal);
+        }
+
+        /* Tablet */
+        @media (max-width: 900px) {
+            header {
+                padding: 16px 30px;
+            }
+
+            nav {
+                gap: 20px;
+            }
+
+            section {
+                padding: 60px 30px;
+            }
+
+            .criadores-container {
+                gap: 30px;
+            }
+
+            .carrossel-prev {
+                left: 8px;
+            }
+
+            .carrossel-next {
+                right: 8px;
+            }
+        }
+
+        /* Celular */
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 14px;
+                padding: 16px 20px;
+            }
+
+            nav {
+                gap: 16px;
+                flex-wrap: wrap;
+                justify-content: center;
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 60px 20px 45px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 45px 20px;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+                margin-bottom: 32px;
+            }
+
+            /* Criadores em grade 2x2, mantendo o tamanho original */
+            .criadores-container {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(120px, 180px));
+                gap: 30px 16px;
+                justify-items: center;
+                justify-content: center;
+            }
+
+            .carrossel-imagem img.imagem-vertical {
+                max-height: 320px;
+            }
+
+            .carrossel-legenda {
+                padding: 12px 16px;
+                font-size: 0.85rem;
+            }
+
+            .carrossel-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 1rem;
+                top: 45%;
+            }
+
+            .carrossel-dots {
+                margin-top: 14px;
+                gap: 8px;
+            }
+
+            .dot {
+                width: 9px;
+                height: 9px;
+            }
+        }
+
+        /* Telas muito pequenas */
+        @media (max-width: 380px) {
+            .criadores-container {
+                gap: 20px 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
+
     <header>
         <div id="site-brand">
-            <img id="logo" src="imgs/logo.png" alt="Logo CriptoCefet">
+            <img id="logo" src="../imgs/logo.png" alt="Logo CriptoCefet">
             <h1>CriptoCefet</h1>
         </div>
 
         <nav>
-            <a href="index.html">Início</a>
-            <a href="cifras/explorar-cifras.html">Explorar cifras</a>
-            <a href="conteudo/tudo.html">Conteúdo</a>
-            <a href="sobre-o-projeto.html">Sobre o Projeto</a>
+            <a href="../index.html">Início</a>
+            <a href="../cifras/explorar-cifras.html">Explorar cifras</a>
+            <a href="../conteudo/tudo.html">Conteúdo</a>
+            <a href="../sobre-o-projeto.html" class="active">Sobre o Projeto</a>
         </nav>
     </header>
+    <script src="/components/importHeader.js"></script>
 
-    <main class="container" id="m">
-        <h2 id="main-title">O que é o Criptocefet?</h2>
-        <p id="description">
-            O CriptoCefet é um projeto de extensão voltado para criar uma plataforma de estudos com conteúdo interativo
-            sobre Criptografia e Matemática.
-        </p>
-        <br>
-        <p>Criadores:</p>
-        <ul>
-            <li>Clístenes Lopes da Cunha, professor no CEFET-MG</li>
-            <li>Divane Aparecida de Moraes Dantas, professora no CEFET-MG</li>
-            <li>Izabela Marques de Oliveira, professora no CEFET-MG</li>
-            <li>Nícolas Francisco Martins Chagas | <a href="https://github.com/Nickfmc07">GitHub</a></li>
-        </ul>
-        <br>
-        <p>Atribuições:</p>
-        <ul>
-            <li>Uicons do <a href="https://www.flaticon.com/uicons">Flaticon</a></li>
-        </ul>
+    <main>
+        <section class="hero">
+            <h1>Sobre o <span class="highlight">Projeto</span></h1>
+            <p>O CriptoCefet é um projeto de extensão voltado para criar uma plataforma de estudos com conteúdo
+                interativo sobre Criptografia e Matemática.</p>
+        </section>
+
+        <section id="criadores">
+            <h2>Criadores</h2>
+            <div class="criadores-container">
+                <a class="criador" href="http://lattes.cnpq.br/4844317717801610" target="_blank" rel="noopener">
+                    <div class="criador-avatar"><img src="imgs/criadores/d.png" alt="Profa. Divane Dantas"></div>
+                    <div class="criador-nome">Profa. Divane Dantas</div>
+                    <div class="criador-papel">Professora Doutora em Geometria Algébrica</div>
+                    <div class="criador-lattes">
+                        Currículo Lattes
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </div>
+                </a>
+                <a class="criador" href="http://lattes.cnpq.br/2803469302351136" target="_blank" rel="noopener">
+                    <div class="criador-avatar"><img src="imgs/criadores/c.png" alt="Prof. Clístenes da Cunha"></div>
+                    <div class="criador-nome">Prof. Clístenes da Cunha</div>
+                    <div class="criador-papel">Professor Doutorando em Educação Tecnológica</div>
+                    <div class="criador-lattes">
+                        Currículo Lattes
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </div>
+                </a>
+                <a class="criador" href="http://lattes.cnpq.br/0119061678782077" target="_blank" rel="noopener">
+                    <div class="criador-avatar"><img src="imgs/criadores/i.png" alt="Profa. Izabela Marques"></div>
+                    <div class="criador-nome">Izabela de Oliveira</div>
+                    <div class="criador-papel">Professora Doutora em Modelagem Matemática e Computacional</div>
+                    <div class="criador-lattes">
+                        Currículo Lattes
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </div>
+                </a>
+                <a class="criador" href="https://lattes.cnpq.br/0939442929916629" target="_blank" rel="noopener">
+                    <div class="criador-avatar"><img src="imgs/criadores/n.png" alt="Nícolas Chagas"></div>
+                    <div class="criador-nome">Nícolas Chagas</div>
+                    <div class="criador-papel">Desenvolvedor do site e integrante do projeto</div>
+                    <div class="criador-lattes">
+                        Currículo Lattes
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section id="eventos">
+            <h2>Eventos Acadêmicos</h2>
+            <div class="carrossel-wrapper">
+                <div class="carrossel">
+                    <div class="carrossel-track" id="carrossel-track">
+                        <div class="carrossel-slide">
+                            <div class="carrossel-imagem">
+                                <img src="imgs/eventos/workshop-wmma-2025.png" alt="Foto do Evento 3">
+                            </div>
+                            <div class="carrossel-legenda">Participação no Workshop de Matemática e Matemática Aplicada (WMMA)</div>
+                        </div>
+                        <div class="carrossel-slide">
+                            <div class="carrossel-imagem">
+                                <img src="imgs/eventos/palestra-picjr.png" alt="Foto do Evento 4">
+                            </div>
+                            <div class="carrossel-legenda">Palestra em evento do Pic-JR</div>
+                        </div>
+                        <div class="carrossel-slide">
+                            <div class="carrossel-imagem">
+                                <img src="imgs/eventos/workshop-ufmg-2025.jpeg" alt="Foto do Evento 1" class="imagem-vertical">
+                            </div>
+                            <div class="carrossel-legenda">Participação no Primeiro Workshop Mineiro de Matemática Aplicada na UFMG</div>
+                        </div>
+                        <div class="carrossel-slide">
+                            <div class="carrossel-imagem">
+                                <img src="imgs/eventos/palestra-cefet-1.png" alt="Foto do Evento 2">
+                            </div>
+                            <div class="carrossel-legenda">Palestra para estudantes do Ensino Médio no CEFET-MG</div>
+                        </div>
+                    </div>
+                    <button class="carrossel-btn carrossel-prev" onclick="mudarSlide(-1)">&#10094;</button>
+                    <button class="carrossel-btn carrossel-next" onclick="mudarSlide(1)">&#10095;</button>
+                </div>
+                <div class="carrossel-dots" id="carrossel-dots"></div>
+            </div>
+        </section>
     </main>
 
-    <script src="../scripts/geral.js"></script>
+    <script>
+        const carrossel = document.querySelector('.carrossel');
+        const track = document.getElementById('carrossel-track');
+        const slides = document.querySelectorAll('.carrossel-slide');
+        const imagens = document.querySelectorAll('.carrossel-imagem img');
+        const dotsContainer = document.getElementById('carrossel-dots');
+        let indiceAtual = 0;
+        let autoplayInterval;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => irParaSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+        const dots = document.querySelectorAll('.dot');
+
+        function ajustarAltura() {
+            const imgAtiva = imagens[indiceAtual];
+            if (imgAtiva && imgAtiva.complete && imgAtiva.naturalHeight) {
+                const altura = slides[indiceAtual].offsetHeight;
+                carrossel.style.height = altura + 'px';
+            }
+        }
+
+        function atualizarCarrossel() {
+            track.style.transform = `translateX(-${indiceAtual * 100}%)`;
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === indiceAtual));
+            ajustarAltura();
+        }
+
+        function mudarSlide(direcao) {
+            indiceAtual = (indiceAtual + direcao + slides.length) % slides.length;
+            atualizarCarrossel();
+            reiniciarAutoplay();
+        }
+
+        function irParaSlide(i) {
+            indiceAtual = i;
+            atualizarCarrossel();
+            reiniciarAutoplay();
+        }
+
+        function iniciarAutoplay() {
+            autoplayInterval = setInterval(() => {
+                indiceAtual = (indiceAtual + 1) % slides.length;
+                atualizarCarrossel();
+            }, 4000);
+        }
+
+        function reiniciarAutoplay() {
+            clearInterval(autoplayInterval);
+            iniciarAutoplay();
+        }
+
+        imagens.forEach((img, i) => {
+            if (img.complete) {
+                if (i === indiceAtual) ajustarAltura();
+            } else {
+                img.addEventListener('load', () => {
+                    if (i === indiceAtual) ajustarAltura();
+                });
+            }
+        });
+        window.addEventListener('resize', ajustarAltura);
+
+        ajustarAltura();
+        iniciarAutoplay();
+    </script>
+
 </body>
 
 </html>
