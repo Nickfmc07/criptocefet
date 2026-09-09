@@ -70,6 +70,52 @@
         #chave[type=number] {
             -moz-appearance: textfield;
         }
+
+        /* --- NOVO: Estilos para as caixas de texto expansíveis --- */
+        .comp-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: left;
+        }
+
+        .comp-label {
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+            gap: 8px;
+        }
+
+        .expandable-input {
+            width: 100%;
+            min-height: 46px; /* Altura inicial parecida com a de um input normal */
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid var(--cinza-escuro, #bcbec9);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: none; /* Impede de redimensionar arrastando o canto */
+            overflow: hidden; /* Esconde a barra de rolagem */
+            line-height: 1.5;
+            background-color: var(--branco, #F5F8FA);
+            color: var(--preto, #000000);
+            transition: border-color 0.2s;
+        }
+
+        .expandable-input:focus {
+            outline: none;
+            border-color: var(--azul, #1548b7);
+        }
+
+        .expandable-input:disabled {
+            background-color: var(--cinza-claro, #dfe5f1);
+            color: #555;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
@@ -129,7 +175,6 @@
         <p>Para usar a cifra, vamos primeiro escolher qual chave vamos usar. A chave deve ser um número natural. Se a chave for 0, não haverá deslocamento.</p>
         
         <div class="interactive-content">
-            <!-- Botões de + e - adicionados aqui -->
             <div class="key-control-wrapper">
                 <i class="fi fi-rs-digital-key"></i>
                 <button id="btn-minus" class="btn-step" aria-label="Diminuir chave">-</button>
@@ -160,11 +205,18 @@
                 </label>
                 <span>Decifrar</span>
             </div>
-            <div class="comp">
-                <label for="mensagem"><i class="azul fi fi-rs-unlock"></i> Mensagem: <input type="text" id="mensagem" placeholder="Digite sua mensagem"></label>
             
-
-                <label for="texto-cifrado"><i class="ciano fi fi-rs-lock"></i> Texto cifrado: <input disabled type="text" id="texto-cifrado"></label>
+            <!-- CAIXAS DE TEXTO ATUALIZADAS AQUI -->
+            <div class="comp comp-container">
+                <label for="mensagem" class="comp-label">
+                    <span><i class="azul fi fi-rs-unlock"></i> Mensagem:</span>
+                    <textarea id="mensagem" class="expandable-input" rows="1" placeholder="Digite sua mensagem"></textarea>
+                </label>
+            
+                <label for="texto-cifrado" class="comp-label">
+                    <span><i class="ciano fi fi-rs-lock"></i> Texto cifrado:</span>
+                    <textarea disabled id="texto-cifrado" class="expandable-input" rows="1"></textarea>
+                </label>
             </div>
         </div>
 
@@ -178,31 +230,68 @@
     <script src="../scripts/geral.js"></script>
     <script src="../scripts/cesar.js"></script>
     
-    <!-- Script para fazer os botões de + e - funcionarem -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // --- Lógica dos botões de + e - ---
             const chaveInput = document.getElementById("chave");
             const btnMinus = document.getElementById("btn-minus");
             const btnPlus = document.getElementById("btn-plus");
 
             function atualizarChave(delta) {
-                // Pega o valor atual, ou 0 se estiver vazio
                 let valorAtual = parseInt(chaveInput.value) || 0;
                 let novoValor = valorAtual + delta;
                 
-                // Respeita o limite mínimo configurado no input (min="0")
                 const minimo = parseInt(chaveInput.min) || 0;
                 if (novoValor < minimo) novoValor = minimo;
 
                 chaveInput.value = novoValor;
                 
-                // Dispara os eventos de input/change para que o cesar.js atualize a página instantaneamente
                 chaveInput.dispatchEvent(new Event('input', { bubbles: true }));
                 chaveInput.dispatchEvent(new Event('change', { bubbles: true }));
             }
 
             btnMinus.addEventListener("click", () => atualizarChave(-1));
             btnPlus.addEventListener("click", () => atualizarChave(1));
+
+            // --- Lógica das Caixas de Texto Expansíveis ---
+            const msgInput = document.getElementById("mensagem");
+            const cifradoInput = document.getElementById("texto-cifrado");
+            const modoSwitch = document.getElementById("modo");
+
+            function autoExpand(textarea) {
+                // Volta para 'auto' para recalcular se o usuário apagar o texto
+                textarea.style.height = 'auto';
+                // Define a altura baseada no scrollHeight (altura real do texto)
+                textarea.style.height = textarea.scrollHeight + 'px';
+            }
+
+            // Sempre que digitar algo...
+            msgInput.addEventListener("input", () => {
+                autoExpand(msgInput); // Expande a caixa superior
+                
+                // O setTimeout 0ms espera o script cesar.js preencher a caixa inferior,
+                // e só então redimensiona a caixa inferior.
+                setTimeout(() => {
+                    autoExpand(cifradoInput);
+                }, 0);
+            });
+
+            // Se o usuário clicar no botão "Cifrar / Decifrar", atualiza também as alturas
+            if (modoSwitch) {
+                modoSwitch.addEventListener("change", () => {
+                    setTimeout(() => {
+                        autoExpand(msgInput);
+                        autoExpand(cifradoInput);
+                    }, 0);
+                });
+            }
+            
+            // Também redimensionar caso mude a chave (pois o texto cifrado será recriado)
+            chaveInput.addEventListener("input", () => {
+                setTimeout(() => {
+                    autoExpand(cifradoInput);
+                }, 0);
+            });
         });
     </script>
 </body>
