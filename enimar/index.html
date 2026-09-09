@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,14 +30,15 @@
         body::after {
             content: "";
             position: absolute;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            );
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.15),
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 1px,
+                    transparent 2px);
             pointer-events: none;
             z-index: 10;
         }
@@ -127,14 +129,22 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
 
         @media (max-width: 600px) {
             .buttons-container {
                 flex-direction: column;
             }
+
             .header {
                 flex-direction: column;
                 gap: 10px;
@@ -142,9 +152,12 @@
         }
     </style>
 </head>
+
 <body>
     <script>
         sessionStorage.setItem('sessionStartTime', Date.now());
+        // Quando o jogador clica em "Iniciar Missão" no primeiro nível
+        sessionStorage.setItem('errorsCount', '0');
     </script>
 
     <div class="terminal-container">
@@ -154,17 +167,19 @@
         </div>
 
         <h1 class="mission-title">> Missão: O Desvio do Mensageiro</h1>
-        
+
         <div class="narrative-box">
             <p>> ATENÇÃO EQUIPE. Interceptamos uma comunicação de rádio inimiga há 14 minutos.</p>
-            <p>> A análise preliminar indica que o sinal sofreu um deslocamento constante em todas as letras do alfabeto.</p>
+            <p>> A análise preliminar indica que o sinal sofreu um deslocamento constante em todas as letras do
+                alfabeto.</p>
             <p>> Dados cifrados interceptados abaixo:</p>
-            
+
             <div class="intercept-data">
                 WUDQVPLVVDR FRQILUPDGD
             </div>
 
-            <p>> OBJETIVO: Utilizar o terminal do Criptocefet para descobrir a chave correta e revelar a senha de acesso para a próxima etapa<span class="cursor"></span></p>
+            <p>> OBJETIVO: Utilizar o terminal do Criptocefet para descobrir a chave correta e revelar a senha de acesso
+                para a próxima etapa<span class="cursor"></span></p>
         </div>
 
         <div class="buttons-container">
@@ -180,4 +195,5 @@
     </div>
 
 </body>
+
 </html>

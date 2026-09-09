@@ -221,6 +221,8 @@
                 }, 2000);
 
             } else {
+                let errosAtuais = parseInt(sessionStorage.getItem('errorsCount') || '0', 10);
+                sessionStorage.setItem('errorsCount', errosAtuais + 1);
                 inputField.classList.remove('error-shake');
                 void inputField.offsetWidth;
                 inputField.classList.add('error-shake');
