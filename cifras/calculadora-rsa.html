@@ -454,6 +454,11 @@
                         <input type="number" id="inputQ" placeholder="ex: 53">
                     </div>
 
+                    <span class="field-label">Expoente público e (opcional)</span>
+                    <div class="input-row">
+                        <input type="number" id="inputE" placeholder="Deixe em branco para auto-gerar">
+                    </div>
+
                     <div id="msgChaves" class="small-note"></div>
 
                     <div class="key-pair-display">
@@ -543,6 +548,7 @@
         // Seleção dos elementos do DOM
         const inputP = document.getElementById("inputP");
         const inputQ = document.getElementById("inputQ");
+        const inputE = document.getElementById("inputE"); // Novo campo de entrada 'e'
         const msgChaves = document.getElementById("msgChaves");
         const pubKeyOut = document.getElementById("pubKeyOut");
         const privKeyOut = document.getElementById("privKeyOut");
@@ -664,7 +670,7 @@
                 q = BigInt(inputQ.value);
             } catch (err) {
                 msgChaves.classList.add("error");
-                msgChaves.innerText = "Por favor, insira números inteiros válidos.";
+                msgChaves.innerText = "Por favor, insira números inteiros válidos para p e q.";
                 return;
             }
 
@@ -686,12 +692,37 @@
 
             let n = p * q;
             let phi = (p - 1n) * (q - 1n);
-            let e = chooseE(phi);
+            let e;
 
-            if (!e) {
-                msgChaves.classList.add("error");
-                msgChaves.innerText = "Não foi possível encontrar um expoente público 'e' coprimo a φ(n).";
-                return;
+            // Verifica se o usuário inseriu um 'e' manualmente
+            if (inputE.value.trim() !== "") {
+                try {
+                    e = BigInt(inputE.value);
+                } catch (err) {
+                    msgChaves.classList.add("error");
+                    msgChaves.innerText = "O valor de 'e' deve ser um número inteiro válido.";
+                    return;
+                }
+
+                if (e <= 1n || e >= phi) {
+                    msgChaves.classList.add("error");
+                    msgChaves.innerText = "O expoente 'e' deve ser maior que 1 e menor que φ(n).";
+                    return;
+                }
+                
+                if (gcd(e, phi) !== 1n) {
+                    msgChaves.classList.add("error");
+                    msgChaves.innerText = "O expoente 'e' informado não é coprimo a φ(n). Tente outro valor.";
+                    return;
+                }
+            } else {
+                // Auto-gera 'e' se estiver em branco
+                e = chooseE(phi);
+                if (!e) {
+                    msgChaves.classList.add("error");
+                    msgChaves.innerText = "Não foi possível encontrar um expoente público 'e' coprimo a φ(n).";
+                    return;
+                }
             }
 
             let d = modInverse(e, phi);
@@ -715,6 +746,7 @@
         function limparChaves() {
             inputP.value = "";
             inputQ.value = "";
+            inputE.value = ""; // Limpa também o input do 'e'
             msgChaves.innerText = "";
             msgChaves.classList.remove("error", "success");
 

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal de Missão - Nível 3</title>
+    
+    <!-- Configuração e CDN do MathJax para renderização de LaTeX -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --term-green: #39ff14;
+            --term-bg: #050505;
+            --term-glow: 0 0 10px rgba(57, 255, 20, 0.4);
+            --term-alert: #ff3333;
+            --alert-glow: 0 0 10px rgba(255, 51, 51, 0.5);
+        }
+
+        body {
+            background-color: var(--term-bg);
+            color: var(--term-green);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .terminal-container {
+            width: 90%;
+            max-width: 800px;
+            border: 1px solid var(--term-alert);
+            padding: 30px;
+            box-shadow: var(--alert-glow);
+            background: rgba(20, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            border-bottom: 1px dashed var(--term-alert);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--term-alert);
+            text-shadow: var(--alert-glow);
+        }
+
+        .mission-title {
+            font-size: 1.5rem;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .narrative-box {
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .intercept-data {
+            background-color: rgba(255, 51, 51, 0.1);
+            border-left: 4px solid var(--term-alert);
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        pre {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 10px 0;
+            color: #ffffff;
+        }
+
+        /* Ajuste para fórmulas do MathJax herdarem a cor do terminal */
+        mjx-container {
+            color: var(--term-green) !important;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            background: transparent;
+            color: var(--term-green);
+            border: 1px solid var(--term-green);
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            box-shadow: var(--term-glow);
+        }
+
+        .btn:hover {
+            background: var(--term-green);
+            color: var(--term-bg);
+        }
+
+        .btn-alert {
+            border: 2px solid var(--term-alert);
+            color: var(--term-alert);
+            box-shadow: var(--alert-glow);
+            background: rgba(255, 51, 51, 0.1);
+        }
+
+        .btn-alert:hover {
+            background: var(--term-alert);
+            color: #ffffff;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: var(--term-alert);
+            vertical-align: bottom;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @media (max-width: 600px) {
+            .buttons-container {
+                flex-direction: column;
+            }
+            .header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal-container">
+        <div class="header">
+            <span>[STATUS: ALERTA MÁXIMO - CAMADA CENTRAL]</span>
+            <span>NÍVEL 3 / 3</span>
+        </div>
+
+        <h1 class="mission-title">> Missão: O Núcleo do Servidor (RSA)</h1>
+        
+        <div class="narrative-box">
+            <p>> ACESSO CONCEDIDO. Você superou as cifras simétricas e alcançou a barreira de segurança final.</p>
+            <p>> O firewall central opera sob criptografia assimétrica baseada em Teoria dos Números. Os pacotes de tráfego revelaram os seguintes parâmetros:</p>
+            
+            <div class="intercept-data">
+                <p>> Primo $p = 11$</p>
+                <p>> Primo $q = 13$</p>
+                <p>> Expoente Público $e = 7$</p>
+                <p>> Mensagem Cifrada $C = 9$</p>
+            </div>
+
+            <p>> OBJETIVO: Utilizar as ferramentas do CriptoCEFET para derivar o módulo $n$, a função totiente $\phi(n)$ e a chave privada $d$. Em seguida, calcule $M \equiv C^d \pmod n$ para extrair a senha final<span class="cursor"></span></p>
+        </div>
+
+        <div class="buttons-container">
+            <a href="https://criptocefet.com.br/cifras/calculadora-rsa.html" target="_blank" class="btn">
+                [ Abrir CriptoCEFET ]
+            </a>
+            <a href="auth.html" class="btn btn-alert">
+                [ Inserir Chave Mestra ]
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
