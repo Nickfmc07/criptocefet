@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,22 +12,34 @@
         rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
     <style>
-        /* Estilos para os controles de + e - da chave */
+        /* Conteúdo interativo centralizado */
+        .interactive-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Controles de + e - da chave (ícone acima, linha centralizada) */
         .key-control-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin: 0 auto 15px;
+        }
+        .key-control-wrapper > i {
+            font-size: 1.2rem;
+            color: var(--azul, #1548b7);
+        }
+        .key-control-row {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 15px;
         }
-        
-        .key-control-wrapper i {
-            font-size: 1.2rem;
-            color: var(--azul, #1548b7);
-        }
-
         .btn-step {
             background-color: var(--azul, #1548b7);
             color: #ffffff;
@@ -44,34 +55,33 @@
             justify-content: center;
             transition: all 0.2s ease;
         }
-
         .btn-step:hover {
             background-color: var(--azul-escuro, #07183c);
             transform: translateY(-1px);
         }
-
         .btn-step:active {
             transform: translateY(1px);
         }
-
         #chave {
             text-align: center;
             width: 70px;
+            height: 36px;
+            margin: 0;
+            padding: 0 5px;
+            box-sizing: border-box;
             font-size: 1.1rem;
-            padding: 5px;
         }
-        
         /* Remove as setinhas padrão do input type number */
-        #chave::-webkit-inner-spin-button, 
-        #chave::-webkit-outer-spin-button { 
-            -webkit-appearance: none; 
-            margin: 0; 
+        #chave::-webkit-inner-spin-button,
+        #chave::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
         #chave[type=number] {
             -moz-appearance: textfield;
         }
 
-        /* --- NOVO: Estilos para as caixas de texto expansíveis --- */
+        /* Caixas de texto expansíveis */
         .comp-container {
             width: 100%;
             max-width: 600px;
@@ -81,36 +91,32 @@
             gap: 20px;
             text-align: left;
         }
-
         .comp-label {
             display: flex;
             flex-direction: column;
             font-weight: 500;
             gap: 8px;
         }
-
         .expandable-input {
             width: 100%;
-            min-height: 46px; /* Altura inicial parecida com a de um input normal */
+            min-height: 46px;
             padding: 12px;
             box-sizing: border-box;
             border: 1px solid var(--cinza-escuro, #bcbec9);
             border-radius: 8px;
             font-family: inherit;
             font-size: 1rem;
-            resize: none; /* Impede de redimensionar arrastando o canto */
-            overflow: hidden; /* Esconde a barra de rolagem */
+            resize: none;
+            overflow: hidden;
             line-height: 1.5;
             background-color: var(--branco, #F5F8FA);
             color: var(--preto, #000000);
             transition: border-color 0.2s;
         }
-
         .expandable-input:focus {
             outline: none;
             border-color: var(--azul, #1548b7);
         }
-
         .expandable-input:disabled {
             background-color: var(--cinza-claro, #dfe5f1);
             color: #555;
@@ -118,11 +124,9 @@
         }
     </style>
 </head>
-
 <body>
     <header></header>
     <script src="../components/importHeader.js"></script>
-
     <main class="container">
         <h2 title="Clique para mostrar ou esconder a descrição" id="main-title" class="dropdown-btn">Cifra de César <i class="fi fi-rs-angle-small-right icon-square flipped"></i></h2>
         <div id="description" class="dropdown-content show">
@@ -164,29 +168,24 @@
             <br>
             <p class="align-center">\( 27 \bmod 26 = 1 \)</p>
             Ou seja, 27 casas para a direita é o mesmo que 1 casa para a direita. Então 27 representa a letra "B", assim como 1. Portanto, podemos dizer que o deslocamento é cíclico e se comporta como uma função bijetiva.
-            
         </div>
-        
         <p>Este guia mostra como cifrar e decodificar usando a Cifra de César.</p>
         <br>
-
         <p class="step-name-1">Escolha a chave</p>
         <br>
         <p>Para usar a cifra, vamos primeiro escolher qual chave vamos usar. A chave deve ser um número natural. Se a chave for 0, não haverá deslocamento.</p>
-        
         <div class="interactive-content">
             <div class="key-control-wrapper">
                 <i class="fi fi-rs-digital-key"></i>
-                <button id="btn-minus" class="btn-step" aria-label="Diminuir chave">-</button>
-                <input id="chave" type="number" min="0" value="1">
-                <button id="btn-plus" class="btn-step" aria-label="Aumentar chave">+</button>
+                <div class="key-control-row">
+                    <button id="btn-minus" class="btn-step" aria-label="Diminuir chave">-</button>
+                    <input id="chave" type="number" min="0" value="1">
+                    <button id="btn-plus" class="btn-step" aria-label="Aumentar chave">+</button>
+                </div>
             </div>
-
-            <div class="dropdown-content">
+            <div id="alfabeto-wrapper" class="dropdown-content">
                 <div class="rel" id="alfabeto"></div>
-
                 <div class="rel"><i class="fi fi-rs-arrow-down"></i></div>
-
                 <div class="rel" id="alfabeto-cifrado"></div>
             </div>
         </div>
@@ -195,7 +194,6 @@
         <br>
         <p>Agora, o que vamos fazer é deslocar cada letra da mensagem original pelo número de casas definido pela chave. Após realizar o deslocamento, vamos aplicar o módulo 26 e então converter os números resultantes de volta para letras. Para voltar à mensagem original, ou seja, decodificar o texto cifrado, basta fazer o processo contrário, subtraindo a chave.</p>
         <br>
-
         <div class="interactive-content">
             <div class="switch-container justify-center">
                 <span>Cifrar</span>
@@ -205,21 +203,17 @@
                 </label>
                 <span>Decifrar</span>
             </div>
-            
-            <!-- CAIXAS DE TEXTO ATUALIZADAS AQUI -->
             <div class="comp comp-container">
                 <label for="mensagem" class="comp-label">
                     <span><i class="azul fi fi-rs-unlock"></i> Mensagem:</span>
                     <textarea id="mensagem" class="expandable-input" rows="1" placeholder="Digite sua mensagem"></textarea>
                 </label>
-            
                 <label for="texto-cifrado" class="comp-label">
                     <span><i class="ciano fi fi-rs-lock"></i> Texto cifrado:</span>
-                    <textarea disabled id="texto-cifrado" class="expandable-input" rows="1"></textarea>
+                    <textarea disabled id="texto-cifrado" class="expandable-input" rows="1" placeholder="Texto cifrado"></textarea>
                 </label>
             </div>
         </div>
-
         <br><br><br><br><br>
         <p>Conteúdos relacionados:</p>
         <ul>
@@ -229,10 +223,9 @@
     </main>
     <script src="../scripts/geral.js"></script>
     <script src="../scripts/cesar.js"></script>
-    
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // --- Lógica dos botões de + e - ---
+            // --- Botões de + e - ---
             const chaveInput = document.getElementById("chave");
             const btnMinus = document.getElementById("btn-minus");
             const btnPlus = document.getElementById("btn-plus");
@@ -240,60 +233,38 @@
             function atualizarChave(delta) {
                 let valorAtual = parseInt(chaveInput.value) || 0;
                 let novoValor = valorAtual + delta;
-                
                 const minimo = parseInt(chaveInput.min) || 0;
                 if (novoValor < minimo) novoValor = minimo;
-
                 chaveInput.value = novoValor;
-                
+                // cesar.js escuta apenas "input"; um único evento evita rodar duas vezes
                 chaveInput.dispatchEvent(new Event('input', { bubbles: true }));
-                chaveInput.dispatchEvent(new Event('change', { bubbles: true }));
             }
-
             btnMinus.addEventListener("click", () => atualizarChave(-1));
             btnPlus.addEventListener("click", () => atualizarChave(1));
 
-            // --- Lógica das Caixas de Texto Expansíveis ---
+            // --- Caixas de texto expansíveis ---
             const msgInput = document.getElementById("mensagem");
             const cifradoInput = document.getElementById("texto-cifrado");
             const modoSwitch = document.getElementById("modo");
 
             function autoExpand(textarea) {
-                // Volta para 'auto' para recalcular se o usuário apagar o texto
                 textarea.style.height = 'auto';
-                // Define a altura baseada no scrollHeight (altura real do texto)
                 textarea.style.height = textarea.scrollHeight + 'px';
             }
 
-            // Sempre que digitar algo...
-            msgInput.addEventListener("input", () => {
-                autoExpand(msgInput); // Expande a caixa superior
-                
-                // O setTimeout 0ms espera o script cesar.js preencher a caixa inferior,
-                // e só então redimensiona a caixa inferior.
+            function expandirAmbas() {
+                // setTimeout 0 espera o cesar.js preencher o outro campo
                 setTimeout(() => {
+                    autoExpand(msgInput);
                     autoExpand(cifradoInput);
                 }, 0);
-            });
-
-            // Se o usuário clicar no botão "Cifrar / Decifrar", atualiza também as alturas
-            if (modoSwitch) {
-                modoSwitch.addEventListener("change", () => {
-                    setTimeout(() => {
-                        autoExpand(msgInput);
-                        autoExpand(cifradoInput);
-                    }, 0);
-                });
             }
-            
-            // Também redimensionar caso mude a chave (pois o texto cifrado será recriado)
-            chaveInput.addEventListener("input", () => {
-                setTimeout(() => {
-                    autoExpand(cifradoInput);
-                }, 0);
-            });
+
+            msgInput.addEventListener("input", expandirAmbas);
+            cifradoInput.addEventListener("input", expandirAmbas);
+            chaveInput.addEventListener("input", expandirAmbas);
+            if (modoSwitch) modoSwitch.addEventListener("change", expandirAmbas);
         });
     </script>
 </body>
-
 </html>

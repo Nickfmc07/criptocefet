@@ -1,10 +1,13 @@
 const chaveEl = document.getElementById('chave')
 const alfabetoEl = document.getElementById('alfabeto')
 const alfabetoCifradoEl = document.getElementById('alfabeto-cifrado')
-const inputs = document.querySelectorAll('input')
+const alfabetoWrapperEl = document.getElementById('alfabeto-wrapper')
 const modoEl = document.getElementById('modo')
 const mensagemEl = document.getElementById('mensagem')
 const textoCifradoEl = document.getElementById('texto-cifrado')
+
+// Escuta tanto <input> quanto <textarea> (as caixas de texto agora são textarea)
+const camposInterativos = document.querySelectorAll('input, textarea')
 
 function preencherConjuntoLetras(elementoEl, primeiraLetra) {
   elementoEl.innerHTML = ''
@@ -54,45 +57,46 @@ function decryptC(key, textoCifrado) {
 function trocarModo() {
   if (modoEl.checked) {
     // Modo: Decifrar
-    mensagemEl.disabled = true;
-    mensagemEl.placeholder = 'Texto decodificado';
-    
-    textoCifradoEl.disabled = false;
-    textoCifradoEl.placeholder = 'Digite aqui o texto cifrado';
+    mensagemEl.disabled = true
+    mensagemEl.placeholder = 'Texto decodificado'
+
+    textoCifradoEl.disabled = false
+    textoCifradoEl.placeholder = 'Digite aqui o texto cifrado'
   } else {
     // Modo: Cifrar
-    mensagemEl.disabled = false;
-    mensagemEl.placeholder = 'Digite sua mensagem';
+    mensagemEl.disabled = false
+    mensagemEl.placeholder = 'Digite sua mensagem'
 
-    textoCifradoEl.disabled = true;
-    textoCifradoEl.placeholder = 'Texto cifrado';
+    textoCifradoEl.disabled = true
+    textoCifradoEl.placeholder = 'Texto cifrado'
   }
 }
 
 function atualizarConteudoInterativo() {
-  if (chaveEl.value != '') chaveEl.nextElementSibling.classList.add('show')
-  if (chaveEl.value === '') chaveEl.nextElementSibling.classList.remove('show')
+  // Mostra/esconde o alfabeto (não depende mais de nextElementSibling)
+  if (alfabetoWrapperEl) {
+    alfabetoWrapperEl.classList.toggle('show', chaveEl.value !== '')
+  }
 
-  let chave = (parseInt(chaveEl.value, 10) || 0) % 26;
+  let chave = (parseInt(chaveEl.value, 10) || 0) % 26
+  if (chave < 0) chave += 26
 
-  let c = encrypt(chave, 'A') // c é a primeira letra do alfabeto cifrado
-
+  let c = encrypt(chave, 'A') // primeira letra do alfabeto cifrado
   preencherConjuntoLetras(alfabetoCifradoEl, c)
 
   if (modoEl.checked)
-      mensagemEl.value = decryptC(chave, textoCifradoEl.value)
-  else 
-      textoCifradoEl.value = encrypt(chave, mensagemEl.value)
+    mensagemEl.value = decryptC(chave, textoCifradoEl.value)
+  else
+    textoCifradoEl.value = encrypt(chave, mensagemEl.value)
 }
 
 modoEl.addEventListener('change', () => {
   trocarModo()
+  atualizarConteudoInterativo()
 })
 
-inputs.forEach(input => {
-  input.addEventListener('input', () => {
-    atualizarConteudoInterativo()
-  });
-});
+camposInterativos.forEach(campo => {
+  campo.addEventListener('input', atualizarConteudoInterativo)
+})
 
 preencherConjuntoLetras(alfabetoEl, "A")
