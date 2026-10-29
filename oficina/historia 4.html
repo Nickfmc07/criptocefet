@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão Cumprida - Sistema Comprometido</title>
+    <style>
+        :root {
+            --term-green: #39ff14;
+            --term-bg: #050505;
+            --term-glow: 0 0 12px rgba(57, 255, 20, 0.4);
+            --term-border: rgba(57, 255, 20, 0.3);
+        }
+
+        body {
+            background-color: var(--term-bg);
+            color: var(--term-green);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .terminal-container {
+            width: 90%;
+            max-width: 750px;
+            border: 2px solid var(--term-green);
+            padding: 35px;
+            box-shadow: var(--term-glow);
+            background: rgba(0, 20, 0, 0.6);
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .header-badge {
+            display: inline-block;
+            border: 1px solid var(--term-green);
+            padding: 5px 15px;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            background: rgba(57, 255, 20, 0.1);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 10px 0 25px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: var(--term-glow);
+        }
+
+        .summary-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px dashed var(--term-border);
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            border: 1px solid var(--term-green);
+            padding: 15px;
+            background: rgba(57, 255, 20, 0.05);
+            box-shadow: var(--term-glow);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-top: 5px;
+            color: #ffffff;
+        }
+
+        .btn-restart {
+            display: inline-block;
+            background: transparent;
+            color: var(--term-green);
+            border: 2px solid var(--term-green);
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-family: inherit;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: var(--term-glow);
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-restart:hover {
+            background: var(--term-green);
+            color: var(--term-bg);
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal-container">
+        <div class="header-badge">[STATUS: INVASÃO BEM-SUCEDIDA]</div>
+        <h1>Acesso Total Concedido</h1>
+
+        <p>> Todas as camadas criptográficas foram rompidas. O núcleo do sistema foi desativado com sucesso.</p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Pontuação Total</div>
+                <div class="stat-value" id="final-score">0 PTS</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Tempo Total</div>
+                <div class="stat-value" id="final-time">0s</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Tentativas Falhas</div>
+                <div class="stat-value" id="final-errors">0</div>
+            </div>
+        </div>
+
+        <div class="summary-box">
+            <div>> Nível 1: Cifra de César ............ [COMPROMETIDO]</div>
+            <div>> Nível 2: Cifra de Hill ............. [COMPROMETIDO]</div>
+            <div>> Nível 3: Algoritmo RSA ............. [COMPROMETIDO]</div>
+            <div>> Apoio Técnico ..................... CriptoCEFET</div>
+        </div>
+
+        <button class="btn-restart" onclick="resetMission()">[ Reiniciar Simulação ]</button>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const score = sessionStorage.getItem('totalScore') || '1000';
+            const errors = sessionStorage.getItem('errorsCount') || '0';
+            
+            // Calcula o tempo acumulado caso um início geral tenha sido registrado
+            const initialStart = sessionStorage.getItem('sessionStartTime');
+            let totalTimeFormatted = "0s";
+            
+            if (initialStart) {
+                const totalSeconds = Math.floor((Date.now() - parseInt(initialStart, 10)) / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                totalTimeFormatted = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+            } else {
+                totalTimeFormatted = "--";
+            }
+
+            document.getElementById('final-score').innerText = `${score} PTS`;
+            document.getElementById('final-errors').innerText = errors;
+            document.getElementById('final-time').innerText = totalTimeFormatted;
+        });
+
+        function resetMission() {
+            sessionStorage.clear();
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+</html>
