@@ -175,6 +175,16 @@
                 text-shadow: var(--term-glow);
             }
         }
+
+        @media (max-width: 600px), (max-height: 700px) {
+            body { height: 100dvh; }
+            body::after { height: 100dvh; position: fixed; }
+            .auth-container { padding: 12px; }
+            .lock-icon { font-size: 2rem; margin-bottom: 8px; }
+            h1 { font-size: 1.1rem; letter-spacing: 2px; margin-bottom: 16px; }
+            .btn { padding: 10px 24px; font-size: 1rem; }
+            .status-message { margin-top: 14px; font-size: 0.9rem; }
+        }
     </style>
 </head>
 
